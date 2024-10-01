@@ -1,0 +1,786 @@
+/* LANDING PAGE AND SEARCH/BODY PAGE */
+
+body {
+  background-color: rgba(217, 217, 217, 1);
+  margin: 5px 0 5px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'EB Garamond';
+}
+
+p, a, button, span, li {
+  font-family: 'Source Serif 4';
+}
+
+#landingpage {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 20px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.kontainerlanding {
+  background-color: transparent;
+  cursor: default;
+  .textboxlanding {
+    border-radius: 10px;
+    padding: 0 0 10px 0;
+    height: 250px;
+    width: 99vw;
+    background-image: url('asset/1636690539-alfons-morales-YLSwjSy7stw-unsplash-2.jpg');
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat; 
+    .tulisanbox {
+      border: 2px solid black;
+      border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); 
+      width: 1020px;
+      height: 205px;
+      background-color: rgba(217, 201, 172, 0.6);
+      backdrop-filter: blur(5px);
+      padding: 10px;
+      h1 {
+        font-weight: bolder;
+        font-size: 32px;
+        margin-bottom: 5px; 
+        margin-top: 1px;
+        border-bottom: 2px solid black;
+      }
+      p {
+        font-size: 17px;
+        margin-top: 16px; 
+      }
+    }
+  }
+}
+
+.searchcontainer {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  position: relative;
+  text-align: center; 
+  input {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    width: 794px; 
+    height: 40px; 
+    border-radius: 10px;
+    border: none;
+    padding: 0 0 0 20px;
+  }
+  input:focus::placeholder {
+    color: transparent;
+  }
+  a {
+    font-size: 26px;
+    margin-left: 10px;
+    text-decoration: underline;
+    cursor: default;
+  }
+}
+
+#kanankiri {
+  display: flex; 
+  justify-content: center; 
+}
+
+#kiricontainer {
+  position: relative; 
+  height: auto; 
+}
+
+#kanancontainer {
+  position: relative;
+  height: auto;
+  margin-left: 20px;
+}
+
+#section1 {
+  display: flex;
+  flex-direction: column;
+  background-image: url('asset/20170509_Eng_Library_DJA_012_3.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 1049px; 
+  border-radius: 10px;
+  height: 1448px;
+  overflow: hidden; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+#section1::before {
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0; 
+  bottom: 0; 
+  background-image: url('asset/20170509_Eng_Library_DJA_012_3.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  border-radius: 10px; 
+  z-index: 1; 
+}
+
+.containergenre {
+  z-index: 2;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  background-color: rgba(202, 187, 161, 1);
+  width: 219px;
+  height: -47px;
+  text-align: center;
+  border-radius: 10px 0 0 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25); 
+  h1 {
+    font-size: 24px;
+    cursor: default;
+  }
+}
+
+.genresection {
+  z-index: 2;
+  border: 2px solid black;
+  width: 219px;
+  height: 463px;
+  border-radius: 0 0 10px 0;
+  backdrop-filter: blur(25px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25); 
+  .textgenre{
+    margin: 10px 20px 20px 0;
+    list-style-type: none;
+    a {
+      color: black;
+      font-size: 22px;
+      margin: 0 0 0 24px;
+      line-height: 40px; 
+      
+    }
+  }
+}
+
+.boxmore {
+  display: flex;
+  justify-content: center; 
+  margin-top: 200px; 
+}
+
+.buttonmore {
+  border: none;
+  text-align: center;
+  width: 90%; 
+  height: 38px;
+  z-index: 1;
+  border: 2px solid black;
+  background-color: transparent;
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.boxrandom {
+  display: flex;
+  justify-content: center; 
+  margin-top: 70px;
+  .buttonrandom {
+    height: 30px;
+    width: 150px;
+    border: 2px solid black;
+    background-color: rgba(217, 201, 172, 1);
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+#section2 {
+  position: absolute;
+  border-radius: 0 10px 0 10px;
+  top: 0; 
+  left: 240px; 
+  width: 809px; 
+  height: 1320px; 
+  
+  background-color: rgb(214, 203, 184);
+  z-index: 2; 
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25); 
+}
+
+.imagecontai-row {
+  justify-items: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  padding: 20px;
+  overflow: auto;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  height: 1100px;
+  .img {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    cursor: default;
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+.imagebox {
+  width: 175px;
+  height: 270px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  .imageboxdec {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    border: 2px solid black;;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    h5 {
+      font-size: 22px;
+      text-decoration: underline;
+      margin: 0;
+      cursor: default;
+      padding: 8px 0 0 0;
+    }
+    .textcol {
+      font-size: 20px;
+      margin: 0; 
+      padding-top: 3px;
+      cursor: default;  
+      .green, .red, .black {
+        cursor: default; 
+      }
+    }
+  }
+}
+
+.section3 {
+  top: 1264px;
+  position: absolute;
+  padding: 0 0 0 315px;
+  z-index: 2; 
+}
+
+.buttonnextprevpage {
+  display: flex;
+  button {
+    cursor: pointer;
+    border: none;
+    margin: 0 10px 0 10px;
+    width: 102px;
+    height: 32px;
+    font-size: 16px;
+    color: rgba(217, 201, 172, 1);
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: rgba(160, 132, 80, 1);
+  }
+}
+
+.popsection {
+  position: relative;
+  background-color: rgba(202, 187, 161, 1);
+  width: 826px; 
+  border-radius: 10px 10px 0 0;
+  height: 98px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  .textpop {
+    text-align: center;
+    text-decoration: underline;
+    display: flex;
+    h1 {
+      font-size: 40px;
+      margin: 0;
+      cursor: default;
+    }
+  }
+}
+
+.posectionboxatas {
+  background-color: transparent;
+  border: 2px solid black;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  height: 816px;
+  width: 826px; 
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); 
+  border-radius: 0 0 10px 10px;
+  padding: 4px 0 0 0;
+}
+
+.bookbok {
+  background-color: transparent;
+  position: absolute;
+}
+
+.bookbok2 {
+  position: relative;
+  margin: 10px 10px 10px 10px;
+  background-image: url('asset/1636690539-alfons-morales-YLSwjSy7stw-unsplash-2.jpg');
+  width: 800px;
+  height: 392px; 
+  display: flex;
+  flex-direction: row;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  img {
+    cursor: default;
+    width: 280px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+  .isibuku {
+    background-color: rgba(160, 132, 80, 0.6); 
+    backdrop-filter: blur(25px); 
+    width: 490px;
+    margin: 10px;
+    border: 2px solid black;
+    position: relative;
+    border-radius: 10px;
+    overflow: auto;
+    h4 {
+      font-size: 22px;
+      cursor: default;
+      border-bottom: 2px solid black;
+    }
+    p {
+      font-size: 18px;
+      cursor: default;
+    }
+    h4, p {
+      padding: 0 10px 0 10px;
+      
+    }
+  }
+}
+
+.forumsection  {
+  margin: 10px 0 0 0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: rgba(202, 187, 161, 1);
+  width: 826px; 
+  border-radius: 10px 10px 0 0;
+  height: 98px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  .forumsectiontext {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bolder;
+    text-decoration: underline;
+    p {
+      cursor: default;
+    }
+  }
+}
+
+.forsectionbody {
+  width: 826px;
+  height: 413px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 0 0 10px 10px;
+  .tablekontai {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    background-color: rgba(217, 201, 172, 1);
+    border-radius: 0 0 10px 10px;
+    .atas {
+      margin: 0 20px 0 0;
+      background-color: rgba(217, 217, 217, 1);
+      width: 100%;
+      border-bottom: 2px solid black;
+      border-top: 2px solid black;
+      ul {
+        text-decoration: underline;
+        display: flex;           
+        justify-content: flex-start; 
+        align-items: center;      
+        height: 100%;            
+        margin: 0;                
+        padding-left: 25px; 
+        p {
+          font-size: 20px;
+          cursor: default;
+        }
+      }
+    }
+    .bawah {
+      margin: 0 20px 0 0;
+      background-color: transparent;
+      width: 100%;
+      ul {
+        text-decoration: underline;
+        display: flex;           
+        justify-content: flex-start; 
+        align-items: center;      
+        height: 100%;            
+        margin: 0;                
+        padding-left: 25px; 
+        p {
+          font-size: 20px;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+/* Hoover Effect Zoom out*/
+
+.buttonmore, .buttonrandom {
+  transition: transform 0.2s cubic-bezier(0.42, 0, 0.58, 1), 
+              box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.buttonmore:hover, .buttonrandom:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.bookbok2 img {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
+              box-shadow 0.2s ease;
+}
+
+.bookbok2 img:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.nextprevpage button {
+  transition: transform 0.2s cubic-bezier(0.42, 0, 0.58, 1), 
+              background-color 0.2s ease, 
+              box-shadow 0.2s ease;
+}
+
+.nextprevpage button:hover {
+  transform: scale(1.06);
+  background-color: rgba(160, 132, 80, 0.8);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes zoomin {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.01);
+  }
+}
+
+.bookbok2 img:hover {
+  animation: zoomin 0.3s forwards;
+}
+
+
+.imagecontai-row .img:active {
+  transform: scale(0.99);
+}
+
+
+/* Click Button */
+
+.boxmore button:active {
+  transform: scale(0.99);
+}
+
+.boxrandom button:active {
+  transform: scale(0.99);
+}
+
+.nextprevpage button:active {
+  transform: scale(0.95);
+}
+
+/* Hoover Text  */
+
+.imageboxdec h5:hover {
+  color: rgba(105, 105, 105, 1); 
+}
+
+.imageboxdec .green {
+  color: rgba(74, 169, 82, 1);
+}
+
+.imageboxdec .red {
+  color: rgba(255, 0, 26, 1);
+}
+
+.imageboxdec .black {
+  color: rgba(0, 0, 0, 1);
+}
+
+.imageboxdec .green:hover {
+  color: rgba(34, 139, 34, 1); 
+}
+
+.imageboxdec .red:hover {
+  color: rgba(139, 0, 0, 1);
+}
+
+.imageboxdec .black:hover {
+  color: rgba(105, 105, 105, 1); 
+}
+
+.posectionboxatas h4:hover {
+  color: rgb(56, 56, 56); 
+}
+
+.searchcontainer a:hover {
+  color: rgb(56, 56, 56);  
+}
+
+/* Click Text  */
+
+.searchcontainer a:active {
+  color: rgb(83, 83, 83);  
+}
+
+.imageboxdec h5:active {
+  color: rgba(54, 54, 54, 1);  
+  transform: scale(0.95); 
+}
+
+.imageboxdec .green:active {
+  color: rgba(0, 128, 0, 1);
+  transform: scale(0.95);   
+}
+
+.imageboxdec .red:active {
+  color: rgba(178, 34, 34, 1); 
+  transform: scale(0.95);     
+}
+
+.imageboxdec .black:active {
+  color: rgba(54, 54, 54, 1); 
+  transform: scale(0.95);      
+}
+
+.textpop h1:active {
+  color: rgba(54, 54, 54, 1);  
+}
+
+.posectionboxatas h4:active {
+  color: rgb(83, 83, 83);  
+}
+
+.forumsectiontext ,.tablekontai p:active {
+  color: rgba(54, 54, 54, 1);  
+}
+
+.forumsectiontext .p:active {
+  color: rgba(54, 54, 54, 1);  
+}
+
+/* Responsive */
+
+@media (min-width: 800px) and (max-width: 1910px) {
+  .kontainerlanding {
+    .textboxlanding {
+     .tulisanbox {
+      overflow: auto;
+      width: 60vw;
+     }
+    }
+  }
+
+  #kanankiri { 
+    display: flex;
+    flex-direction: column;
+    position: static; 
+    top: auto; 
+    left: auto; 
+    #kiricontainer {
+      margin-left: 10px;
+      margin-right: 13px;
+      display: flex;
+      flex-direction: column;
+    }
+      #section1 {
+        display: flex;
+        flex-direction: row;
+        height: 70px;
+        background-image: none;
+        box-shadow: none;
+        width: 100%;
+        border-radius: 0;
+        .containergenre {
+          border-radius: 10px 0 0 0;  
+        }
+        .genresection {
+          display: flex;
+          flex-direction: row;
+          height: auto !important;
+          width: 100%;
+          border: none !important;
+          box-shadow: none !important;
+          background-color: transparent;
+          backdrop-filter: none !important;
+          border-radius: 0;
+          .textgenre {
+            display: flex;
+            align-items: center;
+            list-style-type: none;
+            width: 100%;
+            border-top: 2px solid black;
+            border-right: 2px solid black;
+            border-radius: 0 10px 0 0;
+            margin: 0 0 0 0;
+          }
+          a {
+            margin: 0 15px;
+            font-size: 22px;
+          }
+          .boxmore {
+            position: relative;
+            left: 80px;
+            margin: 0 0 0 1px;
+            .buttonmore {
+              width: 200px;
+              background-color: rgba(202, 187, 161, 1);
+            }
+          }
+          .boxrandom {
+            visibility: hidden;
+          }
+        }
+      }
+      
+      #section1::before {
+        background-image: none;
+      }
+
+      #section2 {
+        position: relative;
+        box-shadow: none;
+        background-color: transparent;
+        display: flex;
+        width: 100%;
+        right: 0;
+        left: 0;
+        .imagecontai-row {
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 0 10px 10px 10px;
+          justify-content: center;
+          position: absolute;
+          background-color: rgba(202, 187, 161, 1);
+          width: 100%;
+          padding:100px 1px 0 1px;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          img {
+            box-shadow: none;
+          }
+        } 
+      }
+      .section3 {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        top: 1200px;
+        width: 98.9vw;
+    }
+     #kanancontainer {
+      visibility: hidden;
+     }
+    
+    /* #kanancontainer {
+      margin-left: 10px;
+      margin-right: 13px;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      
+ 
+    }
+    .popsection {
+      position: relative;
+    }
+    .popsectionbook {
+      position: relative;
+      top: 100px;
+      .posectionboxatas {
+        display: flex;
+        justify-content: center;
+        
+        .bookbok {
+          width: 100%;
+        }
+      }
+    }
+    .forsectionbody {
+      position: absolute;
+      top: 100px;
+      left: 840px;
+      width: 51.45%;
+      height: 825px;
+      margin: 0;
+      padding: 0;
+      .tablekontai {
+        width: 100%;
+        
+      }
+
+    }
+    .forumsection {
+      position: relative;
+      margin: 0;
+      margin-left: 10px;
+      width: 100%;
+     } */
+  }
+}
+
+@media (min-width: 928px) and (max-width: 960px) {
+
+  .section3 {
+    top: 1200px;
+    left: 130px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 864px)  {
+
+  .section3 {
+      display: flex;
+      top: 10px;
+      padding: 0;
+      margin: 100px 0 0 0;
+      width: 97.9vw !important;
+  }
+}
+
+/* LANDING PAGE AND SEARCH/BODY PAGE */
