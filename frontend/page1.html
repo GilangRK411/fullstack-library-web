@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style/page1.css">
 </head>
 <body>
+    <header id="navbar-container"></header>
+
     <!-- Landing Page -->
     <div id="landingpage">
         <div class="kontainerlanding">
@@ -238,7 +240,15 @@
         
     </div> 
     <!-- Body/Search Page -->
-     
 
+    <footer id="footer-container"></footer>
+     
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+        document.addEventListener('DOMContentLoaded', LoadFooter);
+    </script>
 </body>
+
+
 </html>

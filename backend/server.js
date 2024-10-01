@@ -7,7 +7,6 @@ const bookrouter = require('./routes/bookroute.js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 app.use (express.static(path.join(__dirname, '../frontend')));
 
 app.get('/', (req, res) => {
