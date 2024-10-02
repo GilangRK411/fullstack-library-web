@@ -10,6 +10,28 @@
 <body>
     <header id="navbar-container"></header>
 
+    <nav class="navbar">
+        <a href="index.html" class="selected">Home</a>
+        <a href="#" id="loginlink">Login</a>
+        <a href="forum.html" class="#">Forum</a>
+        <a href="contribute.html" class="#"><strong><u>Contribute</u></strong></a>
+    </nav>
+
+
+    <div id="login-popup" class="loginpopup">
+        <div class="loginpopupcontent">
+            <span id="closelogin">%times;</span>
+            <h2>Login</h2>
+            <form class="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Landing Page -->
     <div id="landingpage">
         <div class="kontainerlanding">
@@ -247,6 +269,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', loadNavbar);
         document.addEventListener('DOMContentLoaded', LoadFooter);
+
+        
     </script>
 </body>
 
