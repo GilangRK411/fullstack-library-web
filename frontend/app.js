@@ -1,11 +1,23 @@
-async function loadNavbar() {
-    const response = await fetch('navbar.html');
-    const navbarHTML = await response.text();
-    document.getElementById('navbar-container').innerHTML = navbarHTML;  
-}    
+async function loadHTML() {
+    const hederResponse = await fetch('../header.html');
+    const footerResponse = await fetch('../footer.html');
 
-async function  LoadFooter() {
-    const response = await fetch('footer.html');
-    const footerHTML = await response.text();
-    document.getElementById('footer-container').innerHTML = footerHTML;
+    const headerHTML = await hederResponse.text();
+    const footerHTML = await footerResponse.text();
+
+    document.getElementById('header').innerHTML = headerHTML;
+    document.getElementById('footer').innerHTML = footerHTML;
+
+    const currentPage = window.location.pathname.split("/").pop();
+    const navLink = document.querySelector('nav ul li a');
+
+    navLink.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
 }
+
+document.addEventListener('DOMContentLoaded', loadHTML);
