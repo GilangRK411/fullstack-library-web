@@ -5,43 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
-    <link rel="stylesheet" href="style/page1.css">
+    <link rel="stylesheet" href="../style/catalog.css">
 </head>
 <body>
     <header id="navbar-container"></header>
 
-    <nav class="navbar">
-        <a href="index.html" class="selected">Home</a>
-        <a href="#" id="loginlink">Login</a>
-        <a href="forum.html" class="#">Forum</a>
-        <a href="contribute.html" class="#"><strong><u>Contribute</u></strong></a>
-    </nav>
-
-
-    <div id="login-popup" class="loginpopup">
-        <div class="loginpopupcontent">
-            <span id="closelogin">%times;</span>
-            <h2>Login</h2>
-            <form class="login-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Landing Page -->
     <div id="landingpage">
-        <div class="kontainerlanding">
-            <div class="textboxlanding">
-                <div class="tulisanbox">
-                    <h1>About This Site</h1>
-                    <p>The world has much knowledge and truth to reveal and the internet has offered up a way to access it. This website's purpose is to be one of the faucets that spills it out. While this means any literature or media is allowed, the good and bad, I believe the user will develop a good sense of filter with enough time spent consuming variable amount of content. Unlike when faced with nation scale restricted media where the flow of information can be directed by a country, allowing whatever content they see fit while blocking those that stray from the narrative.</p>
-                </div>
-            </div>
-        </div>
         <div class="searchcontainer">
             <input type="text" placeholder="input here">
             <a>Search</a>
@@ -265,8 +235,7 @@
 
     <footer id="footer-container"></footer>
      
-    <script src="app.js"></script>
-    <script>
+    <Script src="../app.js">
         document.addEventListener('DOMContentLoaded', loadNavbar);
         document.addEventListener('DOMContentLoaded', LoadFooter);
 

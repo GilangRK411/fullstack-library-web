@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="../style/uploadbook.css" />
+</head>
+<body>
+
+    <header id="navbar-container"></header>
+
+    <div class="wrapper">
+
+        <div class="container">
+            <h2>Upload File</h2>
+            <p>Please don't upload a virus :|</p>
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required /><br /><br />
+
+                <label for="year">Year Publish:</label>
+                <select id="year" name="year" required>
+                    <option value="">Select Year</option>
+                    <!-- Example years -->
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select><br /><br />
+
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" required /><br /><br />
+
+                <label for="publisher">Publisher:</label>
+                <input type="text" id="publisher" name="publisher" required /><br /><br />
+
+                <label for="page">Page:</label>
+                <input type="number" id="page" name="page" required /><br /><br />
+
+                <label for="language">Language:</label>
+                <select id="language" name="language" required>
+                    <option value="">Select Language</option>
+                    <option value="english">English</option>
+                    <option value="indonesian">Indonesian</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="french">French</option>
+                </select><br /><br />
+
+                <label for="extension">Extension:</label>
+                <select id="extension" name="extension" required>
+                    <option value="">Select Extension</option>
+                    <option value=".pdf">PDF</option>
+                    <option value=".epub">EPUB</option>
+                    <option value=".mobi">MOBI</option>
+                </select><br /><br />
+
+                <label for="file" class="file-upload-label">Upload file</label>
+                <input type="file" id="file" name="file" required /><br /><br />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+
+    <footer id="footer-container"></footer>
+    <Script src="../app.js">
+        document.addEventListener('domcontentloaded', loadNavbar);
+        document.addEventListener('DOMContentLoaded'. loadHeader);
+    </Script>
+</body>
+</html>

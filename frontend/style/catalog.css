@@ -13,54 +13,6 @@ p, a, button, span, li {
   font-family: 'Source Serif 4';
 }
 
-#landingpage {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 20px 0;
-  justify-content: center;
-  align-items: center;
-}
-
-.kontainerlanding {
-  background-color: transparent;
-  cursor: default;
-  .textboxlanding {
-    border-radius: 10px;
-    padding: 0 0 10px 0;
-    height: 250px;
-    width: 99vw;
-    background-image: url('asset/1636690539-alfons-morales-YLSwjSy7stw-unsplash-2.jpg');
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    background-repeat: no-repeat; 
-    .tulisanbox {
-      border: 2px solid black;
-      border-radius: 10px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); 
-      width: 1020px;
-      height: 205px;
-      background-color: rgba(217, 201, 172, 0.6);
-      backdrop-filter: blur(5px);
-      padding: 10px;
-      h1 {
-        font-weight: bolder;
-        font-size: 32px;
-        margin-bottom: 5px; 
-        margin-top: 1px;
-        border-bottom: 2px solid black;
-      }
-      p {
-        font-size: 17px;
-        margin-top: 16px; 
-      }
-    }
-  }
-}
-
 .searchcontainer {
   margin-top: 40px;
   margin-bottom: 40px;

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="../style/forumthread.css">
+</head>
+<body>
+
+    <header id="navbar-container"></header>
+
+    <div class="search-container">
+        <h2>Search</h2>
+        <div class="search-row">
+            <select aria-label="Category">
+                <option>Category</option>
+            </select>
+            <select aria-label="Order">
+                <option>Order</option>
+            </select>
+            <input type="text" placeholder="Name" aria-label="Search Name">
+            <button>Search</button>
+        </div>
+        <div class="start-one">+ Start one</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Yaps</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2</td>
+                    <td>Test</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Test</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h1>Start Thread</h1>
+        <p>Discuss a book / an upload, or complain about this website</p>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required />
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="book">Book Discussion</option>
+                        <option value="upload">Upload Discussion</option>
+                        <option value="complaint">Website Complaint</option>
+                    </select>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <footer id="footer-container"></footer>
+
+    <script src="../app.js">
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+        document.addEventListener('DOMContentLoaded', loadHeader);
+    </script>
+</body>
+</html>

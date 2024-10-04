@@ -9,7 +9,3 @@ async function  LoadFooter() {
     const footerHTML = await response.text();
     document.getElementById('footer-container').innerHTML = footerHTML;
 }
-
-// LOGIN POPUP 
-
-// LOGIN POPUP 

@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'EB Garamond';
+}
+
+p, a, button, span, li {
+  font-family: 'Source Serif 4';
+}
+
+body {
+  background-color: #dcdcdc;
+  display: flex;
+  flex-direction: column; 
+  min-height: 100vh; 
+}
+
+.container {
+  background-color: #e6d5b8;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  width: 80%; /* Set width to 80% for better responsiveness */
+  max-width: 600px; /* Max width for larger screens */
+  margin: 10px; /* Center the container */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 10px; /* Increased padding for better usability */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+input[type="file"] {
+  display: none; /* Hidden file input */
+}
+
+.file-upload-label {
+  background-color: #ddd;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block; /* Make label inline */
+  width: auto; /* Auto width for label */
+}
+
+input[type="submit"] {
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+input[type="submit"]:hover {
+  background-color: #4cae4c; /* Darken on hover */
+}
+
+
