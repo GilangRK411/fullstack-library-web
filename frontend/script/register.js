@@ -1,28 +1,5 @@
-const loginform = document.createElement('loginform');
 const registerForm = document.createElement('registerform');
 
-// Login 
-loginform.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('loginusername').value;
-    const password = document.getElementById('loginpassword').value;
-    const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-    });
-    const data = await response.json();
-    if (data.auth) {
-        localStorage.setitem('token', data.token);
-        alert("Login Succes")
-    } else {
-        alert("Login Failed")
-    }
-});
-
-// Register
 document.getElementById('registerform').addEventListener('submit', async function(event) {
     event.preventDefault(); 
 

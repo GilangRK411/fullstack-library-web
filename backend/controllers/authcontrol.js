@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const pool = require('../database/database.js');
 
 exports.login = (req, res) => {
@@ -17,8 +16,14 @@ exports.login = (req, res) => {
         if (!bcrypt.compareSync(password, user.password)) {
             return res.status(401).send({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
-        res.status(200).json({ message: true, token: token });
+
+        req.session.user = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role
+        };
+        res.status(200).send({ message: 'Login Succes'});
     });
 };
 

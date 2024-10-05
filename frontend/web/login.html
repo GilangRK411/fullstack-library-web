@@ -14,21 +14,22 @@
                 <p>Please log in to continue.</p>
             </div>
             <div class="login-form" >
-                <form id="loginForm" novalidate>
+                <form id="loginform" novalidate>
                     <label for="username"></label>
-                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="text" id="logincredential" placeholder="Username or Email" required>
                     
                     <label for="password"></label>
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" id="loginpassword" placeholder="Password" required>
                     
                     <button type="submit">Login</button>
-                    <p id="errorMessage" class="error-message"></p>
+                    <p id="eroormassage" class="error-message"></p>
                 </form>
                 <p class="register-prompt">Belum punya akun? <a href="/register">Silahkan daftar</a>.</p>
+                <div id="eroormassage" style="color: red;"></div>
             </div>
         </div>
     </div>
 
-    <script src="../app.js"></script>
+    <script src="../script/login.js"></script>
 </body>
 </html>
