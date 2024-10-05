@@ -1,23 +1,57 @@
-async function loadHTML() {
-    const hederResponse = await fetch('../header.html');
-    const footerResponse = await fetch('../footer.html');
+const loginform = document.createElement('loginform');
+const registerForm = document.createElement('registerform');
 
-    const headerHTML = await hederResponse.text();
-    const footerHTML = await footerResponse.text();
-
-    document.getElementById('header').innerHTML = headerHTML;
-    document.getElementById('footer').innerHTML = footerHTML;
-
-    const currentPage = window.location.pathname.split("/").pop();
-    const navLink = document.querySelector('nav ul li a');
-
-    navLink.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+// Login 
+loginform.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('loginusername').value;
+    const password = document.getElementById('loginpassword').value;
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
     });
-}
+    const data = await response.json();
+    if (data.auth) {
+        localStorage.setitem('token', data.token);
+        alert("Login Succes")
+    } else {
+        alert("Login Failed")
+    }
+});
 
-document.addEventListener('DOMContentLoaded', loadHTML);
+// Register
+document.getElementById('registerform').addEventListener('submit', async function(event) {
+    event.preventDefault(); 
+
+    const username = document.getElementById('registerusername').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('registerpassword').value;
+
+    const data = {
+        username: username,
+        email: email,
+        password: password
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (response.ok) {
+            window.location.href = '/login'; 
+        } else {
+            document.querySelector('.error-message').textContent = result.message || 'Registration failed.';
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
+        document.querySelector('.error-message').textContent = 'An error occurred. Please try again.';
+    }
+});
