@@ -4,8 +4,16 @@
 </head>
 <body>
     <header class="header1">
-        <span>OpenLibrary</span>
-        <span style="float: right">Ver. 27-09-2024</span>
+        <div class="oplib">
+            <p>OpenLibrary</p>
+        </div>
+        <div id="imgprofile" class="imgprofilecss" onclick="toggleDropdown()">
+            <img src="asset/defaultpp.png" alt="Profile Picture">
+        </div>
+        <div id="dropdown" class="dropdown-content" style="display: none;">
+            <a href="#" onclick="editProfile()">Edit Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
     </header>
     
     <nav>
@@ -14,5 +22,6 @@
         <a href="/forumthread" class="#">Forum</a>
         <a href="/uploadbook" class="#"><strong><u>Contribute</u></strong></a>
     </nav>
-
+    
+    <script src="./script/navbar-footer.js"></script>
 </body>

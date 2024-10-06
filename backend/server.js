@@ -4,8 +4,8 @@ const BodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authrouter = require('./routes/authrou.js');
-const sessionMiddleware = require('./middleware/session.js');
-const {isauthenticated} = require('./middleware/authmiddleware.js');
+const { verifyToken } = require('./middleware/authmiddleware.js');
+
 const app = express();
 
 app.use(cors());
@@ -13,31 +13,24 @@ app.use(BodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+
 app.use (express.static(path.join(__dirname, '../frontend')));
-app.use(sessionMiddleware);
-
-app.use((req, res, next) => {
-    if (req.cookies.user_sid && !req.session.user) {
-        res.clearCookie('user_sid');
-    }
-    next();
-});
-
 
 // ROUTES
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'landing.html'));
 });
 
-app.get('/catalog', isauthenticated, (req, res) => {
+app.get('/catalog', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'catalog.html'));
 });
 
-app.get('/forumthread', isauthenticated, (req, res) => {
+app.get('/forumthread', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'forumthread.html'));
 });
 
-app.get('/uploadbook', isauthenticated, (req, res) => {
+app.get('/uploadbook', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
 });
 
@@ -52,14 +45,6 @@ app.get('/register', (req, res) => {
 
 // API functions
 app.use('/api/auth', authrouter);
-
-app.get('/api/auth/check-session', (req, res) => {
-    if (req.session.user) {
-        res.status(200).send('User is logged in.');
-    } else {
-        res.status(401).send('User not logged in.');
-    }
-});
 
 
 // API functions

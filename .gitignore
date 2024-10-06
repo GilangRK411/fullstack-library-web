@@ -1,8 +1,5 @@
-# Ignore node_modules folder
 node_modules/
-
-# Ignore environment files
 backend/project.env
-
-# Ignore database configuration file
-backend/database/dbconfig.js
+backend/controllers/authlog.js
+frontend/script/header.js
+/.gitignore

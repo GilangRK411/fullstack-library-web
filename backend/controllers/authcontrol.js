@@ -1,5 +1,14 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../database/database.js');
+const jwt = require('jsonwebtoken');
+const path = require('path');  
+const dotenv = require('dotenv');
+const { secretKey } = require('../middleware/session.js');
+const currentDir = __dirname;
+const envPath = path.join(currentDir, '..', 'project.env');
+
+dotenv.config({ path: envPath });
+const nodeenv = process.env.NODE_ENV;
 
 exports.login = async (req, res) => {
     const { usernameOrEmail, password } = req.body; 
@@ -20,17 +29,33 @@ exports.login = async (req, res) => {
         if (!bcrypt.compareSync(password, user.password)) {
             return res.status(401).send({ message: 'Incorrect password' }); 
         }
-        req.session.user = {
-            username: user.username,
-            email: user.email,
-            role: user.role
-        };
+
+        const token = jwt.sign(
+            { id: user.id, username: user.username, email: user.email, role: user.role },
+            secretKey,
+            { expiresIn: '1d' } 
+        );
+
+        res.cookie('token', token, { 
+            httpOnly: true,
+            secure: nodeenv === 'production',
+            maxAge: 24 * 60 * 60 * 1000 
+        });
+
         return res.status(200).send({ message: 'Login successful' });
+        
     } catch (error) {
         console.error('Database Query Error:', error); 
         return res.status(500).send({ message: 'An error occurred on the server' });
     }
 };
+
+// Logout function
+exports.logout = (req, res) => {
+    res.clearCookie('token'); 
+    return res.status(200).send({ message: 'Logout successful' });
+};
+
 
 
 exports.register = async (req, res) => {

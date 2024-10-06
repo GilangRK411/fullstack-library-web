@@ -1,17 +1,35 @@
 header {
-
-    color: white;
     align-items: center;
+}
 
+.oplib {
+    margin: 0 0 0 10px;
 }
 
 .header1 {
-    background-color: black;
-    padding: 20px 0 20px 0;
+    border-bottom: 2px solid black;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.imgprofilecss {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+}
+
+.imgprofilecss img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
 }
 
 nav {
-    padding: 50px 0 50px 0;
+    padding: 50px 0;
     width: 40%;
     margin: 0 auto;
     display: flex;
@@ -35,3 +53,25 @@ nav > a.selected {
     color: black;
     font-weight: bold;
 }
+
+.dropdown-content {
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 1720px;
+    top: 96px
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+

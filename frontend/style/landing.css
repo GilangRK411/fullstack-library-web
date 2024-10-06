@@ -1,10 +1,4 @@
 /* GLOBAL STYLES */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 h1, h2, h3, h4, h5, h6 {
     font-family: 'EB Garamond';
   }
@@ -16,6 +10,10 @@ h1, h2, h3, h4, h5, h6 {
 body {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(217, 217, 217, 1);
 }
 
 #landingpage {
