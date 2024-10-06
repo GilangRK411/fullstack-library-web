@@ -1,30 +1,35 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../database/database.js');
 
-exports.login = (req, res) => {
-    const { credential, password } = req.body;
-    
-    if (!credential || !password) {
-        return res.status(400).send({ message: 'Credential (username or email) and password are required' });
+exports.login = async (req, res) => {
+    const { usernameOrEmail, password } = req.body; 
+    if (!usernameOrEmail || !password) {
+        return res.status(400).send({ message: 'Username/email and password are required' });
     }
 
-    pool.query('SELECT * FROM users WHERE username = ? OR email = ?', [credential, credential], (error, results) => {
-        if (error || results.length === 0) {
-            return res.status(401).send({ message: 'Invalid credentials' });
-        }
-        const user = results[0];
-        if (!bcrypt.compareSync(password, user.password)) {
-            return res.status(401).send({ message: 'Invalid credentials' });
+    try {
+        const [results] = await pool.query(
+            'SELECT * FROM users WHERE username = ? OR email = ?', 
+            [usernameOrEmail, usernameOrEmail]
+        );
+        if (results.length === 0) {
+            return res.status(404).send({ message: 'Username/email not found' }); 
         }
 
+        const user = results[0];
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.status(401).send({ message: 'Incorrect password' }); 
+        }
         req.session.user = {
-            id: user.id,
             username: user.username,
             email: user.email,
             role: user.role
         };
-        res.status(200).send({ message: 'Login Succes'});
-    });
+        return res.status(200).send({ message: 'Login successful' });
+    } catch (error) {
+        console.error('Database Query Error:', error); 
+        return res.status(500).send({ message: 'An error occurred on the server' });
+    }
 };
 
 
