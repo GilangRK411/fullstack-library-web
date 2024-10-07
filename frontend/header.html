@@ -5,19 +5,17 @@
 <body>
     <header class="header1">
         <div class="oplib">
-            <p>OpenLibrary</p>
+            <a href="/">OpenLibrary</a>
         </div>
-        <div id="imgprofile" class="imgprofilecss" onclick="toggleDropdown()">
-            <img src="asset/defaultpp.png" alt="Profile Picture">
+        <div id="imgprofile" class="imgprofilecss">
+            <img src="asset/defaultpp.png" alt="Profile Picture" onclick="toggleDropdown()">
         </div>
-        <div id="dropdown" class="dropdown-content" style="display: none;">
+        <div id="dropdown" class="dropdown-content"> 
             <a href="#" onclick="editProfile()">Edit Profile</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </header>
-    
     <nav>
-        <a href="/" class="active">Home</a>
         <a href="/catalog" class="#">Search</a>
         <a href="/forumthread" class="#">Forum</a>
         <a href="/uploadbook" class="#"><strong><u>Contribute</u></strong></a>

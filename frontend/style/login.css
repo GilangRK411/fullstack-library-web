@@ -7,7 +7,6 @@ p, a, button, span, li {
     font-family: 'Source Serif 4';
 }
 
-/* Body Styles */
 body {
     background-color: rgba(217, 217, 217, 1);
     margin: 0;
@@ -15,13 +14,11 @@ body {
     font-family: 'Source Serif 4';
 }
 
-/* Paragraph Styles */
 p {
     font-family: 'EB Garamond';
     text-align: center;
 }
 
-/* Container Styles */
 .container {
     display: flex;
     flex-direction: column;
@@ -33,12 +30,10 @@ p {
     width: 24%;
 }
 
-/* Header Styles */
 header {
     margin-bottom: 20px;
 }
 
-/* Login Form Styles */
 .login-form {
     background-color: rgba(202, 187, 161, 1);
     border-radius: 10px;
@@ -46,7 +41,6 @@ header {
     padding: 20px;
 }
 
-/* Input Field Styles */
 input {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     width: 100%;
@@ -59,14 +53,13 @@ input {
 
 input:focus {
     outline: none;
-    box-shadow: 0 0 5px rgba(160, 132, 80, 1); /* Add shadow on focus */
+    box-shadow: 0 0 5px rgba(160, 132, 80, 1); 
 }
 
 input:focus::placeholder {
     color: transparent;
 }
 
-/* Button Styles */
 button {
     width: 100%;
     height: 40px;
@@ -82,10 +75,9 @@ button {
 
 button:hover {
     background-color: rgba(140, 112, 70, 1);
-    transform: scale(1.02); /* Scale up on hover */
+    transform: scale(1.02); 
 }
 
-/* Error Message Styles */
 .error-message {
     color: red;
     margin-top: 10px;

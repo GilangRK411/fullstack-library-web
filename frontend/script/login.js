@@ -18,6 +18,7 @@ loginForm.addEventListener('submit', async function(event) {
 
         if (response.ok) {
             alert("Login Success");
+            
             window.location.href = '/catalog';  
         } else {
             document.querySelector('.error-message').textContent = result.message || 'Login failed.'; 

@@ -16,7 +16,6 @@ async function loadHTML() {
     }
 };
 
-
 // Log Out
 async function logout() {
     try {
@@ -31,9 +30,7 @@ async function logout() {
             throw new Error('Failed to log out'); 
         }
         alert('You have been logged out.');
-        isLoggedIn = false; 
-        document.getElementById('dropdown').style.display = 'none'; 
-        window.location.reload(); 
+        window.location.href = '/';
     } catch (error) {
         console.error('Error during logout:', error);
         alert('An error occurred during logout. Please try again.');
@@ -42,34 +39,24 @@ async function logout() {
 
 function toggleDropdown() {
     const dropdown = document.getElementById('dropdown');
-    const currentUrl = window.location.pathname; 
-    if (currentUrl !== '/') {
-        dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
+    
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block'; 
+    } else {
+        dropdown.style.display = 'none'; 
     }
 }
 
-window.onload = function() {
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('dropdown');
     const imgProfile = document.getElementById('imgprofile');
-    const currentUrl = window.location.pathname;
 
-    if (currentUrl === '/') {
-        imgProfile.style.display = 'none'; 
-    } else {
-        imgProfile.style.display = 'block'; 
+    if (!imgProfile.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.style.display = 'none';
     }
-};
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     loadHTML();
+    toggleDropdown();
 });
-
-
-// // Function to edit the profile
-// function editProfile() {
-//     if (isLoggedIn) {
-//         // Redirect to the Edit Profile page or show an edit profile form
-//         alert('Redirecting to Edit Profile page...');
-//     } else {
-//         alert('Please log in to edit your profile.');
-//     }
-// }

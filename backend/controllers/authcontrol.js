@@ -36,9 +36,19 @@ exports.login = async (req, res) => {
             { expiresIn: '1d' } 
         );
 
+        await pool.query(`
+            REPLACE INTO user_sessions (user_id, jwt_token, issued_at, expires_at, login_status) 
+            VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), TRUE)
+        `, [user.id, token]);
+
         res.cookie('token', token, { 
             httpOnly: true,
             secure: nodeenv === 'production',
+            maxAge: 24 * 60 * 60 * 1000 
+        });
+
+        res.cookie('user_id', user.id, { 
+            httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000 
         });
 
@@ -50,13 +60,11 @@ exports.login = async (req, res) => {
     }
 };
 
-// Logout function
 exports.logout = (req, res) => {
     res.clearCookie('token'); 
+    res.clearCookie('user_id'); 
     return res.status(200).send({ message: 'Logout successful' });
 };
-
-
 
 exports.register = async (req, res) => {
     const { username, password, email } = req.body;

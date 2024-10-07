@@ -3,13 +3,17 @@ const { secretKey } = require('./session.js');
 
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token;
-    if (!token) {
-        return res.redirect('/login')
-    }
 
+    if (!token) {
+        return res.redirect('/alert?message=Unauthorized:Please_Login_First');
+    }
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
-            return res.status(401).send({ message: 'Unauthorized' });
+            if (err.name === 'TokenExpiredError') {
+                return res.redirect('/alert?message=Unauthorized:Token_has_expired,Please_Login_Again');
+            } else {
+                return res.redirect('/alert?message=Unauthorized:Invalid_token');
+            }
         }
         req.user = decoded; 
         next();
