@@ -1,6 +1,6 @@
 async function loadHTML() {
-    const headerResponse = await fetch('header.html'); 
-    const footerResponse = await fetch('footer.html');
+    const headerResponse = await fetch('header.ejs'); 
+    const footerResponse = await fetch('footer.ejs');
 
     const headerHTML = await headerResponse.text(); 
     const footerHTML = await footerResponse.text();

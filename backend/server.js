@@ -4,20 +4,19 @@ const BodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authrouter = require('./routes/authrou.js');
+const editprofilerou = require('./routes/editprofilerou.js');
+const pool = require('../backend/database/database.js');
 const { verifyToken } = require('./middleware/authmiddleware.js');
-
-
 const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../frontend/alertpage'));
 
 app.use(cors());
 app.use(BodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../frontend/alertpage'));
-
 app.use (express.static(path.join(__dirname, '../frontend')));
 
 // ROUTES
@@ -45,9 +44,17 @@ app.get('/uploadbook', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
 });
 
+app.get('/user/edit', verifyToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'));
+});
+
+// USER EDIT
+
+// LOGIN AND REGISTER
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'login.html'));
 });
+
 
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'register.html'));
@@ -55,7 +62,8 @@ app.get('/register', (req, res) => {
 
 // API functions
 app.use('/api/auth', authrouter);
-// API functions
+
+app.use('/user/edit', editprofilerou);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

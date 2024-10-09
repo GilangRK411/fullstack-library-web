@@ -12,8 +12,11 @@
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
-    "sqlite3": "^5.1.7"
+    "sequelize": "^6.37.4",
+    "sqlite3": "^5.1.7",
+    "uuid": "^10.0.0"
   },
   "name": "fullstack-library-web",
   "version": "1.0.0",

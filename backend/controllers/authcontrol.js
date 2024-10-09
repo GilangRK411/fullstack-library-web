@@ -2,13 +2,23 @@ const bcrypt = require('bcryptjs');
 const pool = require('../database/database.js');
 const jwt = require('jsonwebtoken');
 const path = require('path');  
-const dotenv = require('dotenv');
 const { secretKey } = require('../middleware/session.js');
-const currentDir = __dirname;
-const envPath = path.join(currentDir, '..', 'project.env');
 
-dotenv.config({ path: envPath });
-const nodeenv = process.env.NODE_ENV;
+
+function generateUniqueId(length = 6) {
+    const characters = '0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+async function isUniqueIdExists(uniqueId) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE unique_id = ?', [uniqueId]);
+    return rows.length > 0; 
+}
 
 exports.login = async (req, res) => {
     const { usernameOrEmail, password } = req.body; 
@@ -43,16 +53,12 @@ exports.login = async (req, res) => {
 
         res.cookie('token', token, { 
             httpOnly: true,
-            secure: nodeenv === 'production',
             maxAge: 24 * 60 * 60 * 1000 
         });
 
-        res.cookie('user_id', user.id, { 
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000 
+        return res.status(200).send({ 
+            message: 'Login successful', 
         });
-
-        return res.status(200).send({ message: 'Login successful' });
         
     } catch (error) {
         console.error('Database Query Error:', error); 
@@ -62,7 +68,6 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
     res.clearCookie('token'); 
-    res.clearCookie('user_id'); 
     return res.status(200).send({ message: 'Logout successful' });
 };
 
@@ -83,13 +88,21 @@ exports.register = async (req, res) => {
         if (existingEmail.length > 0) {
             return res.status(409).send({ message: 'Email already exists' });
         }
+
         const hashedPassword = bcrypt.hashSync(password, 10);
         const role = 'user';
 
-        await pool.query('INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)', [username, hashedPassword, email, role]);
+        let uniqueId;
+        do {
+            uniqueId = generateUniqueId(Math.floor(Math.random() * (8 - 6 + 1)) + 6);
+        } while (await isUniqueIdExists(uniqueId)); 
+
+        // Include unique_id in the SQL INSERT statement
+        await pool.query('INSERT INTO users (unique_id, username, password, email, role) VALUES (?, ?, ?, ?, ?)', [uniqueId, username, hashedPassword, email, role]);
         res.status(201).send({ message: 'User registered successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Internal server error' });
     }
 };
+

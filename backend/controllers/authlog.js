@@ -1,4 +1,4 @@
-const db = require('../database/database.js'); 
+const pool = require('../database/database.js'); 
 const jwt = require('jsonwebtoken'); 
 const { secretKey } = require('../middleware/session.js');
 
@@ -11,7 +11,7 @@ exports.checkSession = async (req, res) => {
 
     try {
         const query = 'SELECT * FROM user_sessions WHERE user_id = ?';
-        const [rows] = await db.execute(query, [user_id]);
+        const [rows] = await pool.execute(query, [user_id]);
 
         if (rows.length > 0) {
             const sessionsStatus = [];

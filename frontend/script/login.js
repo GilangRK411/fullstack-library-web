@@ -1,7 +1,7 @@
-const loginForm = document.getElementById('loginform'); 
+const loginForm = document.getElementById('loginform');
 
 loginForm.addEventListener('submit', async function(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const usernameOrEmail = document.getElementById('logincredential').value; 
     const password = document.getElementById('loginpassword').value;
@@ -16,9 +16,8 @@ loginForm.addEventListener('submit', async function(event) {
         });
         const result = await response.json();
 
-        if (response.ok) {
+        if (response.ok) {          
             alert("Login Success");
-            
             window.location.href = '/catalog';  
         } else {
             document.querySelector('.error-message').textContent = result.message || 'Login failed.'; 

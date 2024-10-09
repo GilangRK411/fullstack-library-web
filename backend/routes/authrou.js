@@ -4,6 +4,7 @@ const authController   = require('../controllers/authcontrol.js');
 const authlog = require('../controllers/authlog.js');
 // const authlog = require('../controllers/authlog.js');
 
+
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
 router.post('/register', authController.register);

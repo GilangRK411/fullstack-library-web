@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="../style/editprofile.css">
+    <script src="../script/navbar-footer.js"></script>
+    <title>Edit Profile</title>
+</head>
+<body>
+    <div class="container">
+        <header id="header"></header>
+        
+        <div class="form-section">
+            <div class="profile-picture-container">
+                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-picture" id="profile-img" onclick="openPhotoEditPopup()">
+                <input type="file" id="profile-picture" name="profile-picture" accept="image/*" onchange="previewImage(event)" style="display: none;">
+            </div>
+            
+            <div class="form-content">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit">Save Changes</button>
+                    </div>
+
+                    <div id="notification" class="notification"></div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for Editing Photo -->
+    <div class="popup" id="photo-edit-popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePhotoEditPopup()">&times;</span>
+            <h3>Edit Profile Picture</h3>
+            <input type="file" id="popup-profile-picture" name="popup-profile-picture" accept="image/*" onchange="previewImage(event, true)">
+            <div class="popup-image-container">
+                <img src="https://via.placeholder.com/100" alt="Profile Picture Preview" class="popup-profile-image" id="popup-profile-img">
+            </div>
+            <button class="popup-button" onclick="closePhotoEditPopup()">Save</button>
+        </div>
+    </div>
+
+    <script src="../script/editprofile.js"></script>
+    
+    
+</body>
+</html>

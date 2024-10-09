@@ -1,0 +1,178 @@
+/* Font Styles */
+h2 {
+    font-family: 'EB Garamond';
+    color: #333;
+}
+
+p, a, button, span, li {
+    font-family: 'Source Serif 4';
+}
+
+body {
+    background-color: rgba(217, 217, 217, 1);
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Serif 4';
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-section {
+    width: 100%;
+    max-width: 600px; /* Maximum width for the form */
+    background-color: rgba(202, 187, 161, 1);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    display: flex; /* Use flex to align image and form */
+}
+
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px; /* Space between image and form */
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(160, 132, 80, 1);
+    margin-bottom: 10px;
+    cursor: pointer; /* Indicate clickable area */
+}
+
+.form-content {
+    flex: 1; /* Allow the form to take the remaining space */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+input {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(160, 132, 80, 1); 
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(160, 132, 80, 1);
+    color: rgba(217, 201, 172, 1);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Added transform for scale effect */
+}
+
+button:hover {
+    background-color: rgba(140, 112, 70, 1);
+    transform: scale(1.02); 
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px; /* Position the popup */
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px; /* Maximum width for the popup */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.popup-image-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.popup-profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(160, 132, 80, 1);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+    .form-section {
+        padding: 15px; /* Adjust padding on smaller screens */
+        flex-direction: column; /* Stack elements vertically on small screens */
+        align-items: center; /* Center elements */
+    }
+
+    .profile-picture-container {
+        margin-right: 0; /* Remove margin for smaller screens */
+        margin-bottom: 20px; /* Space below image */
+    }
+
+    button {
+        font-size: 14px; /* Reduce button font size */
+    }
+}
