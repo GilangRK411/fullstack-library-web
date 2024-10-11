@@ -2,7 +2,8 @@ const pool = require('../database/database.js');
 
 exports.editProfilePic = async (req, res) => {
     const uniqueId = req.params.unique_id;
-    const { new_email, new_username, profile_photo } = req.body;
+    const { new_email, new_username } = req.body;
+    const new_profile_picture = req.file ? req.file.filename : null;  // Dapatkan nama file gambar yang diupload
 
     console.log('Request received with:', req.params, req.body);
     if (!uniqueId) {
@@ -27,9 +28,9 @@ exports.editProfilePic = async (req, res) => {
             editColumns.push('new_username');
             editValues.push(new_username);
         }
-        if (profile_photo) {
-            editColumns.push('profile_photo');
-            editValues.push(profile_photo); 
+        if (new_profile_picture) {
+            editColumns.push('new_profile_picture');
+            editValues.push(new_profile_picture); 
         }
 
         if (editColumns.length > 0) {
@@ -55,9 +56,9 @@ exports.editProfilePic = async (req, res) => {
             updateColumns.push('username = ?');
             updateValues.push(new_username);
         }
-        if (profile_photo) { 
-            updateColumns.push('profile_photo = ?');
-            updateValues.push(profile_photo);
+        if (new_profile_picture) { 
+            updateColumns.push('profile_picture = ?');
+            updateValues.push(new_profile_picture);
         }
 
         if (updateColumns.length > 0) {

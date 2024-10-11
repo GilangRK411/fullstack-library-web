@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
-    <link rel="stylesheet" href="../style/catalog.css">
+    <link rel="preload" href="../style/catalog.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="../style/catalog.css"></noscript>
 </head>
 <body>
-    <header id="header"></header>
+    <header id="header">
+        <img id="profileImage" onclick="toggleDropdown()">
+    </header>
+
 
     <!-- Landing Page -->
     <div id="landingpage">
@@ -142,12 +146,15 @@
             </div>
         </div> <!-- Kanan Div  -->
         
+
     </div> 
-    <!-- Body/Search Page -->
 
     <footer id="footer"></footer>
      
     <Script src="../script/navbar-footer.js"></Script>
+    <script>
+        let FF_FOUC_FIX;
+    </script>
 </body>
 
 

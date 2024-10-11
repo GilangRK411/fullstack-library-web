@@ -27,3 +27,4 @@ loginForm.addEventListener('submit', async function(event) {
         document.querySelector('.error-message').textContent = 'An error occurred. Please try again.'; 
     }
 });
+

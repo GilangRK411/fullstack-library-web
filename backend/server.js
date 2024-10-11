@@ -12,7 +12,10 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../frontend/alertpage'));
 
-app.use(cors());
+app.use(cors({
+    credentials: 'include',
+    origin: 'http://localhost:5000',
+}));
 app.use(BodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
@@ -25,9 +28,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/catalog', verifyToken, (req, res) => {
-    if (!req.user) {
-        return res.redirect('/login');
-    }
+    const uniqueIdCookie = req.cookies.unique_id;
+    console.log('Unique ID from cookie:', uniqueIdCookie);
+
     res.sendFile(path.join(__dirname, '../frontend/web', 'catalog.html'));
 });
 
@@ -40,21 +43,26 @@ app.get('/forumthread', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'forumthread.html'));
 });
 
-app.get('/uploadbook', verifyToken, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
+app.get('/uploapoolook', verifyToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/web', 'uploapoolook.html'));
 });
 
 app.get('/user/edit', verifyToken, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'));
-});
+    const uniqueIdCookie = req.cookies.unique_id;
+    console.log('Unique ID from cookie:', uniqueIdCookie);
 
-// USER EDIT
+    res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'), (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            return res.status(500).send({ message: 'Error loading profile edit page.' });
+        }
+    });
+});
 
 // LOGIN AND REGISTER
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'login.html'));
 });
-
 
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'register.html'));
@@ -64,6 +72,42 @@ app.get('/register', (req, res) => {
 app.use('/api/auth', authrouter);
 
 app.use('/user/edit', editprofilerou);
+
+app.get('/user/profile_picture/:unique_id', async (req, res) => {
+    const uniqueId = req.params.unique_id; 
+    console.log(`Received request for unique_id: ${uniqueId}`);
+
+    try {
+        const connection = await pool.getConnection();
+
+        try {
+            const [results] = await connection.query('SELECT profile_picture FROM users WHERE unique_id = ?', [uniqueId]);
+            
+            console.log('Query executed successfully');
+            console.log('Query results:', results);
+
+            if (results.length === 0) {
+                console.log('User not found'); 
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const profilePicture = results[0].profile_picture;
+
+            if (profilePicture === null || profilePicture.length === 0) {
+                console.log('Profile picture in users are empty');
+            }
+            console.log('Returning profile picture'); 
+            return res.json({ profile_picture: profilePicture });
+
+        } finally {
+            connection.release();
+        }
+
+    } catch (err) {
+        console.error('Database error:', err); 
+        return res.status(500).json({ error: 'Database error' });
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -41,7 +41,12 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: user.id, username: user.username, email: user.email, role: user.role },
+            { 
+                id: user.id, 
+                username: user.username, 
+                email: user.email, 
+                role: user.role 
+            },
             secretKey,
             { expiresIn: '1d' } 
         );
@@ -50,6 +55,16 @@ exports.login = async (req, res) => {
             REPLACE INTO user_sessions (user_id, jwt_token, issued_at, expires_at, login_status) 
             VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), TRUE)
         `, [user.id, token]);
+
+        const uniqueIdCookie = JSON.stringify({ unique_id: user.unique_id });
+        const hundredYears = 100 * 365 * 24 * 60 * 60 * 1000;
+
+        res.cookie('unique_id', uniqueIdCookie, { 
+            httpOnly: false,
+            maxAge: hundredYears,
+            secure: false,
+            path: '/'
+        });
 
         res.cookie('token', token, { 
             httpOnly: true,
@@ -66,8 +81,10 @@ exports.login = async (req, res) => {
     }
 };
 
+
 exports.logout = (req, res) => {
     res.clearCookie('token'); 
+    res.clearCookie('unique_id');
     return res.status(200).send({ message: 'Logout successful' });
 };
 
@@ -97,7 +114,6 @@ exports.register = async (req, res) => {
             uniqueId = generateUniqueId(Math.floor(Math.random() * (8 - 6 + 1)) + 6);
         } while (await isUniqueIdExists(uniqueId)); 
 
-        // Include unique_id in the SQL INSERT statement
         await pool.query('INSERT INTO users (unique_id, username, password, email, role) VALUES (?, ?, ?, ?, ?)', [uniqueId, username, hashedPassword, email, role]);
         res.status(201).send({ message: 'User registered successfully' });
     } catch (error) {

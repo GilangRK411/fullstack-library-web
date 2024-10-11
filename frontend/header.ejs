@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="style/header.css">
+    <link rel="preload" href="./style/header.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="./style/header.css"></noscript>
+
 </head>
 <body>
     <header class="header1">
@@ -8,11 +10,11 @@
             <a href="/">OpenLibrary</a>
         </div>
         <div id="imgprofile" class="imgprofilecss">
-            <img src="asset/defaultpp.png" alt="Profile Picture" onclick="toggleDropdown()">
-        </div>
+            <img id="profileImage" onclick="toggleDropdown()">
+        </div>        
         <div id="dropdown" class="dropdown-content" >
             <!-- Ensure userId is passed correctly here -->
-            <a href="/user/edit" onclick="editProfile()">Edit Profile</a>
+            <a href="/user/edit">Edit Profile</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </header>
@@ -21,6 +23,4 @@
         <a href="/forumthread" class="#">Forum</a>
         <a href="/uploadbook" class="#"><strong><u>Contribute</u></strong></a>
     </nav>
-    
-    <script src="./script/navbar-footer.js"></script>
 </body>
