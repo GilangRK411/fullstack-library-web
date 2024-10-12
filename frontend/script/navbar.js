@@ -1,22 +1,3 @@
-async function loadHTML() {
-    const headerResponse = await fetch('header.ejs'); 
-    const footerResponse = await fetch('footer.ejs');
-
-    const headerHTML = await headerResponse.text(); 
-    const footerHTML = await footerResponse.text();
-
-    const headerElement = document.getElementById('header');
-    const footerElement = document.getElementById('footer');
-
-    if (headerElement && footerElement) {
-        headerElement.innerHTML = headerHTML;
-        footerElement.innerHTML = footerHTML;
-    } else {
-        console.error('Header or footer element not found in the document.');
-    }
-};
-
-// Log Out
 async function logout() {
     try {
         const response = await fetch('/api/auth/logout', {
@@ -68,38 +49,45 @@ function getCookie(name) {
         const cookieValue = parts.pop().split(';').shift();
         const decodedValue = decodeURIComponent(cookieValue);
         const parsedValue = JSON.parse(decodedValue);
-        return parsedValue.unique_id; // Return the unique_id
+        return parsedValue.unique_id; 
     }
     return null;
 }
 
 async function fetchProfilePicture() {
     const unique_id = getCookie('unique_id'); 
-    
-    // Print the URL if unique_id is found
     if (unique_id) {
         const profilePictureUrl = `/user/profile_picture/${unique_id}`;
-        console.log(`Fetching profile picture from: ${profilePictureUrl}`); 
-        
+
         try {
             const response = await fetch(profilePictureUrl);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            const data = await response.json();
-            document.getElementById('profileImage').src = data.profile_picture;
 
-            // Optional: Add error handling if the image fails to load
-            document.getElementById('profileImage').onerror = () => {
+            const data = await response.json();
+            let profilePicture = data.profile_picture;
+            if (!profilePicture || profilePicture === 'null') {
+                profilePicture = '../asset/defaultpp.png';
+            }
+            const profileImageElement = document.getElementById('profileImage');
+            profileImageElement.src = profilePicture;
+
+            profileImageElement.onerror = () => {
                 console.error('Error loading image, setting to default');
-                document.getElementById('profileImage').src = '../asset/defaultpp.png'; 
+                profileImageElement.src = '../asset/defaultpp.png'; 
             };
         } catch (error) {
             console.error('Error fetching profile picture:', error);
+            document.getElementById('profileImage').src = '../asset/defaultpp.png';
         }
     } else {
         console.log('Unique ID not found in cookies');
+        document.getElementById('profileImage').src = '../asset/defaultpp.png';
     }
 }
 
-window.onload = fetchProfilePicture;
+
+window.onload = function() {
+    fetchProfilePicture();
+};

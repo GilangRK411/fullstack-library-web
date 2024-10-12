@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Serif+4:wght@400;700&display=swap' rel='stylesheet'>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../style/editprofile.css">
 </head>
 <body>
@@ -43,15 +44,16 @@
         <div class="popup-content">
             <span class="close" onclick="closePhotoEditPopup()">&times;</span>
             <h3>Edit Profile Picture</h3>
-            <input type="file" id="popup-profile-picture" name="popup-profile-picture" accept="image/*" onchange="previewImage(event, true)">
+            <input type="file" id="popup-profile-picture" name="popup-profile-picture" accept="image/*" onchange="previewImage(event)">
             <div class="popup-image-container">
                 <img src="https://via.placeholder.com/100" alt="Profile Picture Preview" class="popup-profile-image" id="popup-profile-img">
             </div>
-            <button class="popup-button" onclick="closePhotoEditPopup()">Save</button>
+            <button class="popup-button" onclick="cropImage()">Save</button>
         </div>
     </div>
 
     <script src="../script/editprofile.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     
 </body>
 </html>

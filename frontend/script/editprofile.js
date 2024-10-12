@@ -1,3 +1,5 @@
+let cropper;
+
 function previewImage(event, isPopup = false) {
     const img = isPopup ? document.getElementById('popup-profile-img') : document.getElementById('profile-img');
     img.src = URL.createObjectURL(event.target.files[0]);
@@ -12,6 +14,75 @@ function openPhotoEditPopup() {
 
 function closePhotoEditPopup() {
     document.getElementById('photo-edit-popup').style.display = 'none';
+    if (cropper) {
+        cropper.destroy();  
+        cropper = null;  
+    }
+}
+
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        const imgSrc = reader.result;
+        const image = document.getElementById('popup-profile-img');
+        image.src = imgSrc; 
+
+        if (cropper) {
+            cropper.destroy(); 
+            cropper = null;
+        }
+        image.style.width = "100px";
+        image.style.height = "100px";
+    };
+    reader.readAsDataURL(event.target.files[0]);  
+}
+
+function initCropperOnClick() {
+    const image = document.getElementById('popup-profile-img');
+
+    if (cropper) {
+        cropper.destroy();
+    }
+    image.style.width = "400px";
+    image.style.height = "400px";
+    cropper = new Cropper(image, {
+        aspectRatio: 1,  
+        viewMode: 1,
+        responsive: true,
+        scalable: true,
+        zoomable: true,
+        background: false
+    });
+}
+
+function cropImage() {
+    if (cropper) {
+        const croppedCanvas = cropper.getCroppedCanvas(); 
+        const croppedImage = croppedCanvas.toDataURL('image/png'); 
+
+        localStorage.setItem('profilePicture', croppedImage);
+        
+        document.getElementById('profile-img').src = croppedImage;
+        
+        const image = document.getElementById('popup-profile-img');
+        image.style.width = "100px";
+        image.style.height = "100px";
+
+        closePhotoEditPopup();
+    } else {
+        alert('Please crop the image first.');
+    }
+}
+
+function updateUrlWithUniqueId() {
+    const uniqueId = getCookie('unique_id');  
+    if (uniqueId) {
+        const newUrl = `/user/edit?${uniqueId}`;
+        window.history.replaceState(null, null, newUrl); 
+        console.log("Updated URL:", newUrl);
+    } else {
+        console.log("Unique ID not found in cookies."); kan
+    }
 }
 
 function getCookie(name) {
@@ -26,15 +97,13 @@ function getCookie(name) {
     return null;
 }
 
-function updateUrlWithUniqueId() {
-    const uniqueId = getCookie('unique_id');  
-    if (uniqueId) {
-        const newUrl = `/user/edit?${uniqueId}`;
-        window.history.replaceState(null, null, newUrl); 
-        console.log("Updated URL:", newUrl);
-    } else {
-        console.log("Unique ID not found in cookies."); kan
-    }
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); 
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 document.getElementById('editProfileForm').addEventListener('submit', async function(event) {
@@ -50,12 +119,22 @@ document.getElementById('editProfileForm').addEventListener('submit', async func
     const newEmail = document.getElementById('new_email').value;
     const newUsername = document.getElementById('new_username').value;
     const profilePhoto = document.getElementById('profile_photo').files[0]; 
-
+    
+    let base64Photo = null;
+    if (profilePhoto) {
+        try {
+            base64Photo = await readFileAsDataURL(profilePhoto); 
+        } catch (error) {
+            console.error("Failed to read profile photo:", error);
+            document.getElementById('message').innerText = 'Failed to read profile photo.';
+            return;
+        }
+    }
     const data = {
         unique_id: uniqueId,
         new_email: newEmail || undefined,
-        new_username: newUsername || undefined, 
-        profile_photo: profilePhoto || undefined 
+        new_username: newUsername || undefined,
+        new_profile_photo: base64Photo ? base64Photo.split(',')[1] : undefined 
     };
     try {
         const response = await fetch(`http://localhost:5000/user/edit/${uniqueId}`, {
@@ -87,4 +166,13 @@ function updateUrlWithoutUniqueId() {
     console.log("URL updated to:", newUrl); 
 }
 
-window.onload = updateUrlWithUniqueId;
+window.onload = function() {
+    updateUrlWithUniqueId();
+
+    const savedImage = localStorage.getItem('profile_picture');
+    if (savedImage) {
+        document.getElementById('profile-img').src = savedImage;
+    }
+};
+
+document.getElementById('popup-profile-img').addEventListener('click', initCropperOnClick);

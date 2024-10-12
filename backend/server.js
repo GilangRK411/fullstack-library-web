@@ -7,6 +7,7 @@ const authrouter = require('./routes/authrou.js');
 const editprofilerou = require('./routes/editprofilerou.js');
 const pool = require('../backend/database/database.js');
 const { verifyToken } = require('./middleware/authmiddleware.js');
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -16,10 +17,11 @@ app.use(cors({
     credentials: 'include',
     origin: 'http://localhost:5000',
 }));
-app.use(BodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(BodyParser.json({ limit: '50mb' }));
+app.use(BodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use (express.static(path.join(__dirname, '../frontend')));
 
 // ROUTES
@@ -81,7 +83,7 @@ app.get('/user/profile_picture/:unique_id', async (req, res) => {
         const connection = await pool.getConnection();
 
         try {
-            const [results] = await connection.query('SELECT profile_picture FROM users WHERE unique_id = ?', [uniqueId]);
+            const [results] = await connection.query('SELECT profile_picture, image_type FROM users WHERE unique_id = ?', [uniqueId]);
             
             console.log('Query executed successfully');
             console.log('Query results:', results);
@@ -92,12 +94,17 @@ app.get('/user/profile_picture/:unique_id', async (req, res) => {
             }
 
             const profilePicture = results[0].profile_picture;
+            const imageType = results[0].image_type; 
 
             if (profilePicture === null || profilePicture.length === 0) {
-                console.log('Profile picture in users are empty');
+                console.log('Profile picture in users is empty');
+                return res.json({ profile_picture: null });
             }
+            const base64ProfilePicture = Buffer.from(profilePicture).toString('base64');
+            const imageSrc = `data:${imageType};base64,${base64ProfilePicture}`;
+
             console.log('Returning profile picture'); 
-            return res.json({ profile_picture: profilePicture });
+            return res.json({ profile_picture: imageSrc });
 
         } finally {
             connection.release();
@@ -108,6 +115,7 @@ app.get('/user/profile_picture/:unique_id', async (req, res) => {
         return res.status(500).json({ error: 'Database error' });
     }
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
