@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
                 return res.redirect('/alert?message=Unauthorized:Invalid_token');
             }
         }
-        req.user = decoded; 
+        req.userId = decoded.id;
         next();
     });
 };

@@ -23,24 +23,21 @@
                         <label for="new_username">Name:</label>
                         <input type="text" id="new_username" name="new_username" placeholder="Enter your name">
                     </div>
-                    
                     <div class="form-group">
                         <label for="new_email">Email:</label>
                         <input type="email" id="new_email" name="new_email" placeholder="Enter your email">
                     </div>
-
                     <div class="form-group">
                         <button type="submit">Save Changes</button>
                     </div>
-
                     <div id="message" class="notification"></div>
                 </form>
             </div>
-        </div>
+        </div>          
     </div>
-
+    
     <!-- Popup for Editing Photo -->
-    <div class="popup" id="photo-edit-popup">
+    <div class="popup" id="photo-edit-popup" style="display: none;">
         <div class="popup-content">
             <span class="close" onclick="closePhotoEditPopup()">&times;</span>
             <h3>Edit Profile Picture</h3>
@@ -51,6 +48,7 @@
             <button class="popup-button" onclick="cropImage()">Save</button>
         </div>
     </div>
+    
 
     <script src="../script/editprofile.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>

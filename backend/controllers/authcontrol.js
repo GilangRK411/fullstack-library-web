@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../database/database.js');
 const jwt = require('jsonwebtoken');
-const path = require('path');  
 const { secretKey } = require('../middleware/session.js');
+const crypto = require('crypto');
 
+function hashUniqueId(uniqueId) {
+    return crypto.createHash('sha256').update(uniqueId).digest('hex');
+}
 
 function generateUniqueId(length = 6) {
     const characters = '0123456789';
@@ -23,7 +26,7 @@ async function isUniqueIdExists(uniqueId) {
 exports.login = async (req, res) => {
     const { usernameOrEmail, password } = req.body; 
     if (!usernameOrEmail || !password) {
-        return res.status(400).send({ message: 'Username/email and password are required' });
+        return res.status(400).json({ message: 'Username/email and password are required' });
     }
 
     try {
@@ -31,13 +34,14 @@ exports.login = async (req, res) => {
             'SELECT * FROM users WHERE username = ? OR email = ?', 
             [usernameOrEmail, usernameOrEmail]
         );
+
         if (results.length === 0) {
-            return res.status(404).send({ message: 'Username/email not found' }); 
+            return res.status(404).json({ message: 'Username/email not found' }); 
         }
 
         const user = results[0];
         if (!bcrypt.compareSync(password, user.password)) {
-            return res.status(401).send({ message: 'Incorrect password' }); 
+            return res.status(401).json({ message: 'Incorrect password' }); 
         }
 
         const token = jwt.sign(
@@ -56,54 +60,54 @@ exports.login = async (req, res) => {
             VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), TRUE)
         `, [user.id, token]);
 
-        const uniqueIdCookie = JSON.stringify({ unique_id: user.unique_id });
+        const uniqueId = hashUniqueId(user.unique_id.toString()); 
         const hundredYears = 100 * 365 * 24 * 60 * 60 * 1000;
-
-        res.cookie('unique_id', uniqueIdCookie, { 
-            httpOnly: false,
+        res.cookie('unique_id', JSON.stringify({ unique_id: uniqueId }), { 
+            httpOnly: true,  
             maxAge: hundredYears,
-            secure: false,
+            secure: true,  
             path: '/'
         });
 
         res.cookie('token', token, { 
             httpOnly: true,
+            secure: true,
             maxAge: 24 * 60 * 60 * 1000 
         });
 
-        return res.status(200).send({ 
-            message: 'Login successful', 
+        return res.status(200).json({ 
+            message: 'Login successful',
+            unique_id: uniqueId 
         });
         
     } catch (error) {
         console.error('Database Query Error:', error); 
-        return res.status(500).send({ message: 'An error occurred on the server' });
+        return res.status(500).json({ message: 'An error occurred on the server' });
     }
 };
-
 
 exports.logout = (req, res) => {
     res.clearCookie('token'); 
     res.clearCookie('unique_id');
-    return res.status(200).send({ message: 'Logout successful' });
+    return res.status(200).json({ message: 'Logout successful' });
 };
 
 exports.register = async (req, res) => {
     const { username, password, email } = req.body;
     
     if (!username || !password || !email) {
-        return res.status(400).send({ message: 'Username, password, and email are required' });
+        return res.status(400).json({ message: 'Username, password, and email are required' });
     }
 
     try {
         const [existingUser] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
         if (existingUser.length > 0) {
-            return res.status(409).send({ message: 'Username already exists' });
+            return res.status(409).json({ message: 'Username already exists' });
         }
 
         const [existingEmail] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
         if (existingEmail.length > 0) {
-            return res.status(409).send({ message: 'Email already exists' });
+            return res.status(409).json({ message: 'Email already exists' });
         }
 
         const hashedPassword = bcrypt.hashSync(password, 10);
@@ -115,10 +119,9 @@ exports.register = async (req, res) => {
         } while (await isUniqueIdExists(uniqueId)); 
 
         await pool.query('INSERT INTO users (unique_id, username, password, email, role) VALUES (?, ?, ?, ?, ?)', [uniqueId, username, hashedPassword, email, role]);
-        res.status(201).send({ message: 'User registered successfully' });
+        return res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: 'Internal server error' });
+        console.error('Registration Error:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
-

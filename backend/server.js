@@ -13,10 +13,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../frontend/alertpage'));
 
-app.use(cors({
-    credentials: 'include',
-    origin: 'http://localhost:5000',
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -30,9 +27,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/catalog', verifyToken, (req, res) => {
-    const uniqueIdCookie = req.cookies.unique_id;
-    console.log('Unique ID from cookie:', uniqueIdCookie);
-
     res.sendFile(path.join(__dirname, '../frontend/web', 'catalog.html'));
 });
 
@@ -50,9 +44,6 @@ app.get('/uploapoolook', verifyToken, (req, res) => {
 });
 
 app.get('/user/edit', verifyToken, (req, res) => {
-    const uniqueIdCookie = req.cookies.unique_id;
-    console.log('Unique ID from cookie:', uniqueIdCookie);
-
     res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'), (err) => {
         if (err) {
             console.error('Error sending file:', err);
@@ -71,11 +62,11 @@ app.get('/register', (req, res) => {
 });
 
 // API functions
-app.use('/api/auth', authrouter);
+app.use('/auth', authrouter);
 
 app.use('/user/edit', editprofilerou);
 
-app.get('/user/profile_picture/:unique_id', async (req, res) => {
+app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
     const uniqueId = req.params.unique_id; 
     console.log(`Received request for unique_id: ${uniqueId}`);
 
@@ -116,6 +107,23 @@ app.get('/user/profile_picture/:unique_id', async (req, res) => {
     }
 });
 
+app.get('/unique-id', verifyToken, async (req, res) => {
+    const userId = req.userId; 
+    
+    try {
+        const [rows] = await pool.query('SELECT unique_id FROM users WHERE id = ?', [userId]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const uniqueId = rows[0].unique_id; 
+        res.json({ unique_id: uniqueId }); 
+    } catch (error) {
+        console.error('Database Query Error:', error);
+        return res.status(500).json({ message: 'An error occurred on the server' });
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

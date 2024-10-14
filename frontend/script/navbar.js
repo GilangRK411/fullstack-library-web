@@ -1,6 +1,6 @@
 async function logout() {
     try {
-        const response = await fetch('/api/auth/logout', {
+        const response = await fetch('/auth/logout', {
             method: 'POST',
             credentials: 'include', 
             headers: {
@@ -42,52 +42,48 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleDropdown();
 });
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        const cookieValue = parts.pop().split(';').shift();
-        const decodedValue = decodeURIComponent(cookieValue);
-        const parsedValue = JSON.parse(decodedValue);
-        return parsedValue.unique_id; 
-    }
-    return null;
-}
-
 async function fetchProfilePicture() {
-    const unique_id = getCookie('unique_id'); 
-    if (unique_id) {
-        const profilePictureUrl = `/user/profile_picture/${unique_id}`;
+    try {
+        const uniqueIdResponse = await fetch('/unique-id', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
 
-        try {
-            const response = await fetch(profilePictureUrl);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        if (!uniqueIdResponse.ok) {
+            throw new Error('Failed to fetch unique_id: ' + uniqueIdResponse.statusText);
+        }
+
+        const uniqueIdData = await uniqueIdResponse.json();
+        const unique_id = uniqueIdData.unique_id;
+
+        if (unique_id) {
+            const profilePictureUrl = `/user/profile_picture/${unique_id}`;
+            const pictureResponse = await fetch(profilePictureUrl);
+            if (!pictureResponse.ok) {
+                throw new Error('Failed to fetch profile picture: ' + pictureResponse.statusText);
             }
 
-            const data = await response.json();
-            let profilePicture = data.profile_picture;
-            if (!profilePicture || profilePicture === 'null') {
-                profilePicture = '../asset/defaultpp.png';
-            }
+            const data = await pictureResponse.json();
             const profileImageElement = document.getElementById('profileImage');
-            profileImageElement.src = profilePicture;
-
+            profileImageElement.src = data.profile_picture;
             profileImageElement.onerror = () => {
                 console.error('Error loading image, setting to default');
-                profileImageElement.src = '../asset/defaultpp.png'; 
+                profileImageElement.src = 'https://i.ibb.co/com/6yCCpFw/vecteezy-user-profile-icon-profile-avatar-user-icon-male-icon-20911737.png'; 
             };
-        } catch (error) {
-            console.error('Error fetching profile picture:', error);
-            document.getElementById('profileImage').src = '../asset/defaultpp.png';
+        } else {
+            console.log('Unique ID not found in response');
         }
-    } else {
-        console.log('Unique ID not found in cookies');
-        document.getElementById('profileImage').src = '../asset/defaultpp.png';
+    } catch (error) {
+        console.error('Error fetching profile picture:', error);
+    } finally {
+        isFetching = false;
     }
 }
 
-
-window.onload = function() {
+function executeLast() {
     fetchProfilePicture();
-};
+}
+
+executeLast();
