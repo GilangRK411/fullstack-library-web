@@ -1,9 +1,3 @@
-* {
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-  margin: 0;
-  padding: 0;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: 'EB Garamond';
 }
@@ -14,19 +8,48 @@ p, a, button, span, li {
 
 body {
   background-color: #dcdcdc;
-  display: flex;
-  flex-direction: column; 
-  min-height: 100vh; 
+  padding: 0;
+  margin: 0;
 }
 
-.container {
+.kanankiri {
+  display: flex;
+  gap: 20px;
   background-color: #e6d5b8;
-  padding: 30px;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  width: 80%; /* Set width to 80% for better responsiveness */
-  max-width: 600px; /* Max width for larger screens */
-  margin: 10px; /* Center the container */
+  padding: 20px;
+  margin: 0 20px 50px 20px;
+  position: relative; /* For positioning pseudo-element */
+}
+
+.kanankiri::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid black; /* Border around the container */
+  border-radius: 5px; /* Match the radius of the container */
+  pointer-events: none; /* Prevent interaction with this pseudo-element */
+}
+
+.kanankiri::after {
+  content: "";
+  position: absolute;
+  top: 0; /* Aligns with padding */
+  bottom: 20px; /* Aligns with padding */
+  left: calc(50%); /* Position in the center */
+  width: 2px; /* Width of the inner border */
+  background-color: black; /* Color of the inner border */
+  height: 465px;
+}
+
+
+.kiri-container,
+.kanan-container {
+  flex: 1;
 }
 
 h2 {
@@ -41,18 +64,23 @@ label {
 }
 
 input[type="text"],
-select,
-input[type="number"] {
+input[type="number"],
+textarea,
+select {
   width: 100%;
-  padding: 10px; /* Increased padding for better usability */
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
 
+textarea {
+  resize: none;
+}
+
 input[type="file"] {
-  display: none; /* Hidden file input */
+  display: none;
 }
 
 .file-upload-label {
@@ -62,8 +90,21 @@ input[type="file"] {
   border-radius: 3px;
   cursor: pointer;
   text-align: center;
-  display: inline-block; /* Make label inline */
-  width: auto; /* Auto width for label */
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.imagepreview {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.imagepreview img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-top: 10px;
 }
 
 input[type="submit"] {
@@ -73,11 +114,9 @@ input[type="submit"] {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth transition */
+  transition: background-color 0.3s;
 }
 
 input[type="submit"]:hover {
-  background-color: #4cae4c; /* Darken on hover */
+  background-color: #4cae4c;
 }
-
-

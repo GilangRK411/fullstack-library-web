@@ -7,6 +7,9 @@ const authrouter = require('./routes/authrou.js');
 const editprofilerou = require('./routes/editprofilerou.js');
 const pool = require('../backend/database/database.js');
 const { verifyToken } = require('./middleware/authmiddleware.js');
+const { validationResult } = require('express-validator');
+const logger = require('./utils/logger.js');
+const bookRoutes = require('./routes/bookroute.js');
 
 const app = express();
 
@@ -20,6 +23,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(BodyParser.json({ limit: '50mb' }));
 app.use(BodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use (express.static(path.join(__dirname, '../frontend')));
+
+app.use((err, req, res, next) => {
+    logger.error(`Internal Server Error: ${err.message}`);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
+
+// Global validation error handler
+app.use((req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+});
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -39,8 +56,8 @@ app.get('/forumthread', verifyToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'forumthread.html'));
 });
 
-app.get('/uploapoolook', verifyToken, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/web', 'uploapoolook.html'));
+app.get('/uploadbook', verifyToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
 });
 
 app.get('/user/edit', verifyToken, (req, res) => {
@@ -65,6 +82,8 @@ app.get('/register', (req, res) => {
 app.use('/auth', authrouter);
 
 app.use('/user/edit', editprofilerou);
+
+app.use('/book', bookRoutes); // Prefix routes with /api
 
 app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
     const uniqueId = req.params.unique_id; 

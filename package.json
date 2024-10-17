@@ -11,13 +11,15 @@
     "express-mysql-session": "^3.0.3",
     "express-rate-limit": "^7.4.1",
     "express-session": "^1.18.0",
+    "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.4",
     "sqlite3": "^5.1.7",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "winston": "^3.15.0"
   },
   "name": "fullstack-library-web",
   "version": "1.0.0",
