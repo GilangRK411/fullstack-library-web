@@ -14,84 +14,87 @@
         <p>Please don't upload a virus :|</p>
     </div>
 
-    <div class="kanankiri">
-        <div class="kiri-container">
-            <div class="book-title"> 
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required />
-            </div>
-            <div class="book-description">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-            </div>
-            <div class="book-image">
-                <label for="bookImage" class="file-upload-label">Upload Book Image:</label>
-                <input type="file" id="bookImage" name="bookImage" accept="image/*" required />
-                <div class="imagepreview">
-                    <img id="imagepreviewpic">
+    <form id="bookUploadForm">
+        <div class="kanankiri">
+            <div class="kiri-container">
+                <div class="book-title"> 
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required />
                 </div>
-            </div>
-            <div class="book-page">
-                <label for="page">Page:</label>
-                <input type="number" id="page" name="page" required /><br /><br />
-            </div>
-            <div class="book-author">
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" required />
-            </div>
-        </div> 
-        <div class="kanan-container">
-            <div class="book-category">
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="">Select Category</option>
-                    <option value="1">Fiction</option>
-                    <option value="2">Non-Fiction</option>
-                    <option value="3">Science</option>
-                    <option value="4">Biography</option>
-                </select>
-            </div>
-            <div class="book-publish">
-                <label for="year">Year Publish:</label>
-                <select id="year" name="year" required>
-                    <option value="">Select Year</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                </select>
-            </div>
-            <div class="book-language">
-                <label for="language">Language:</label>
-                <select id="language" name="language" required>
-                    <option value="">Select Language</option>
-                    <option value="english">English</option>
-                    <option value="indonesian">Indonesian</option>
-                    <option value="spanish">Spanish</option>
-                    <option value="french">French</option>
-                </select>
-            </div>
-            <div class="book-file-extension">
-                <label for="extension">File Extension:</label>
-                <select id="extension" name="extension" required>
-                    <option value="">Select Extension</option>
-                    <option value=".pdf">PDF</option>
-                    <option value=".epub">EPUB</option>
-                    <option value=".mobi">MOBI</option>
-                </select>
-            </div>
-            <div class="book-upload-file">
-                <label for="file" class="file-upload-label">Upload Book File:</label>
-                <input type="file" id="file" name="file" accept=".pdf, .epub, .mobi" required />
-                <input type="submit" value="Submit"/>
-            </div>
-        </div>   
-    </div>
+                <div class="book-description">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="book-image">
+                    <label for="bookImage" class="file-upload-label">Upload Book Image:</label>
+                    <input type="file" id="bookImage" name="bookImage" accept="image/*" required />
+                    <div class="imagepreview">
+                        <img id="imagepreviewpic" alt="Image Preview" />
+                    </div>
+                </div>
+                <div class="book-page">
+                    <label for="page">Page:</label>
+                    <input type="number" id="page" name="page" required /><br /><br />
+                </div>
+                <div class="book-author">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" required />
+                </div>
+            </div> 
+            <div class="kanan-container">
+                <div class="book-category">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-Fiction">Non-Fiction</option>
+                        <option value="Science">Science</option>
+                        <option value="Biography">Biography</option>
+                    </select>
+                </div>
+                <div class="book-publish">
+                    <label for="year">Year Publish:</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </div>
+                <div class="book-language">
+                    <label for="language">Language:</label>
+                    <select id="language" name="language" required>
+                        <option value="">Select Language</option>
+                        <option value="English">English</option>
+                        <option value="Indonesian">Indonesian</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                    </select>
+                </div>
+                <div class="book-file-extension">
+                    <label for="extension">File Extension:</label>
+                    <select id="extension" name="extension" required>
+                        <option value="">Select Extension</option>
+                        <option value=".pdf">PDF</option>
+                        <option value=".epub">EPUB</option>
+                        <option value=".mobi">MOBI</option>
+                    </select>
+                </div>
+                <div class="book-upload-file">
+                    <label for="file" class="file-upload-label">Upload Book File:</label>
+                    <input type="file" id="file" name="file" accept=".pdf, .epub, .mobi" required />
+                    <input type="submit" value="Submit" />
+                </div>
+            </div>   
+        </div>
+    </form>
 
     <footer id="footer"></footer>
     
     <Script src="../script/header-footer.js"></Script>
-    <script src="../script/app.js"></script>
-    <script src="../script/book.js"></script>
+    <script src="../script/bookupload.js"></script>
+
 </body>
 </html>

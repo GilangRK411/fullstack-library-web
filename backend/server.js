@@ -83,7 +83,7 @@ app.use('/auth', authrouter);
 
 app.use('/user/edit', editprofilerou);
 
-app.use('/book', bookRoutes); // Prefix routes with /api
+app.use('/book/upload', bookRoutes); // Prefix routes with /api
 
 app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
     const uniqueId = req.params.unique_id; 

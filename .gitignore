@@ -1,2 +1,4 @@
 node_modules/
 backend/project.env
+backend/combined.log
+combined.log
