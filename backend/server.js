@@ -10,8 +10,12 @@ const { verifyToken } = require('./middleware/authmiddleware.js');
 const { validationResult } = require('express-validator');
 const logger = require('./utils/logger.js');
 const bookRoutes = require('./routes/bookroute.js');
+const eventEmitter = require('events');
 
+const emitter = new eventEmitter();
 const app = express();
+
+emitter.setMaxListeners(100);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../frontend/alertpage'));
@@ -83,20 +87,15 @@ app.use('/auth', authrouter);
 
 app.use('/user/edit', editprofilerou);
 
-app.use('/book/upload', bookRoutes); // Prefix routes with /api
+app.use('/book', bookRoutes); // Prefix routes with /api
 
 app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
     const uniqueId = req.params.unique_id; 
-    console.log(`Received request for unique_id: ${uniqueId}`);
-
     try {
         const connection = await pool.getConnection();
 
         try {
             const [results] = await connection.query('SELECT profile_picture, image_type FROM users WHERE unique_id = ?', [uniqueId]);
-            
-            console.log('Query executed successfully');
-            console.log('Query results:', results);
 
             if (results.length === 0) {
                 console.log('User not found'); 
@@ -112,8 +111,6 @@ app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
             }
             const base64ProfilePicture = Buffer.from(profilePicture).toString('base64');
             const imageSrc = `data:${imageType};base64,${base64ProfilePicture}`;
-
-            console.log('Returning profile picture'); 
             return res.json({ profile_picture: imageSrc });
 
         } finally {

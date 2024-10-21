@@ -10,7 +10,7 @@ exports.bookupload = async (req, res) => {
         title,
         description,
         author_name,
-        category_name,
+        genre_name,
         year,
         page,
         language,
@@ -19,7 +19,7 @@ exports.bookupload = async (req, res) => {
         file
     } = req.body;
 
-    const { user_id } = req.params; // Assuming user_id is passed in the URL
+    const { user_id } = req.params; 
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
@@ -45,7 +45,16 @@ exports.bookupload = async (req, res) => {
         connection = await pool.getConnection();
         await connection.beginTransaction();
 
-        // Check and insert author
+        const [existingBookResults] = await connection.query(
+            'SELECT book_title FROM books WHERE book_title = ?',
+            [title]
+        );
+
+        if (existingBookResults.length > 0) {
+            logger.warn(`Book with the title "${title}" already exists.`);
+            return res.status(400).json({ error: 'A book with this title already exists.' });
+        }
+
         let author_id;
         const [authorResults] = await connection.query(
             'SELECT author_id FROM authors WHERE author_name = ?',
@@ -63,31 +72,29 @@ exports.bookupload = async (req, res) => {
             logger.info(`New author added: ${author_name} with ID ${author_id}`);
         }
 
-        // Check and insert category
-        let category_id;
+        let genre_id;
         const [categoryResults] = await connection.query(
-            'SELECT category_id FROM categories WHERE category_name = ?',
-            [category_name]
+            'SELECT genre_id FROM genres WHERE genre_name = ?',
+            [genre_name]
         );
 
         if (categoryResults.length > 0) {
-            category_id = categoryResults[0].category_id;
+            genre_id = categoryResults[0].genre_id;
         } else {
             const [insertCategoryResult] = await connection.query(
-                'INSERT INTO categories (category_name) VALUES (?)',
-                [category_name]
+                'INSERT INTO genres (genre_name) VALUES (?)',
+                [genre_name]
             );
-            category_id = insertCategoryResult.insertId;
-            logger.info(`New category added: ${category_name} with ID ${category_id}`);
+            genre_id = insertCategoryResult.insertId;
+            logger.info(`New category added: ${genre_name} with ID ${genre_id}`);
         }
 
-        // Insert book record
         const sql = `
             INSERT INTO books (
                 book_title,
                 book_description,
                 author_id,
-                category_id,
+                genre_id,
                 year_publish,
                 book_page,
                 book_file_extension,
@@ -101,7 +108,7 @@ exports.bookupload = async (req, res) => {
             title,
             description,
             author_id,
-            category_id,
+            genre_id,
             year,
             page,
             extension,
@@ -119,7 +126,7 @@ exports.bookupload = async (req, res) => {
             message: 'Book added successfully!',
             title,
             author_name,
-            category_name,
+            genre_name,
             year,
             page,
             language,
