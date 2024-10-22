@@ -196,7 +196,7 @@ async function submitForm(event) {
 
     const uniqueId = await getUniqueId();
     if (!uniqueId) {
-        showValidationMessage('Failed to fetch unique ID. Please try again.');
+        showModal('Failed to fetch unique ID. Please try again.');
         return;
     }
 
@@ -211,7 +211,7 @@ async function submitForm(event) {
     const fileInput = document.getElementById('file');
 
     if (!title || !description || !author_name || !year || !page || !language || !bookImageInput.files.length || !fileInput.files.length || selectedGenresArray.length === 0) {
-        showValidationMessage("Please fill out all fields, select at least one genre, and upload both the book image and the book file.");
+        showModal("Please fill out all fields, select at least one genre, and upload both the book image and the book file.");
         return;
     }
 
@@ -242,28 +242,50 @@ async function submitForm(event) {
         const result = await response.json();
 
         if (response.ok) {
-            showValidationMessage('Book uploaded successfully!', true);
+            showModal('Book uploaded successfully!');
             console.log(result);
             await clearFileNamesFromSessionStorage();
             sessionStorage.removeItem('selectedYear');
             sessionStorage.removeItem('selectedGenres');
             clearFormFields();
             setTimeout(() => {
-                location.reload(); 
-            }, 1000); 
+                location.reload();
+            }, 1000);
         } else {
             if (result.error && result.error.includes('already exists')) {
-                showValidationMessage('Error: A book with this title already exists. Please choose a different title.');
+                showModal('Error: A book with this title already exists. Please choose a different title.');
             } else {
                 console.error('Error response:', result);
-                showValidationMessage('Error: ' + (result.error || 'Something went wrong.'));
+                showModal('Error: ' + (result.error || 'Something went wrong.'));
             }
         }
     } catch (error) {
         console.error('Error uploading book:', error);
-        showValidationMessage('Failed to upload the book. Please check for errors.');
+        showModal('Failed to upload the book. Please check for errors.');
     }
 }
+
+
+function showModal(message) {
+    const modal = document.getElementById('messageModal');
+    const modalMessage = document.getElementById('modalMessage');
+    modalMessage.textContent = message;
+    modal.style.display = 'block';
+}
+
+function hideModal() {
+    const modal = document.getElementById('messageModal');
+    modal.style.display = 'none';
+}
+
+document.querySelector('.close-button').addEventListener('click', hideModal);
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('messageModal');
+    if (event.target === modal) {
+        hideModal();
+    }
+});
+
 
 document.getElementById('bookUploadForm').addEventListener('submit', submitForm);
 
