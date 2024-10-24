@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchProfilePicture() {
     try {
-        const uniqueIdResponse = await fetch('/unique-id', {
-            method: 'GET',
+        const uniqueIdResponse = await fetch('/auth/get_unique_id', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             }

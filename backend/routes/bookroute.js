@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const { bookupload } = require('../controllers/bookcontrol.js'); 
 const { getBooks, showBook } = require('../model/getbook.js');
+const { getBookBody } = require('../model/bookbody.js');
 
 const router = express.Router();
 const bookUploadValidation = [
@@ -20,5 +21,7 @@ const bookUploadValidation = [
 router.post('/upload/:user_id', bookUploadValidation, bookupload);
 router.post('/getbooks', getBooks);
 router.post('/showbook/:book_id', showBook);
+
+router.get('/:book_id/:book_title/body', getBookBody);
 
 module.exports = router;

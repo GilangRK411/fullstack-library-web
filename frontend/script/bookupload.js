@@ -170,7 +170,7 @@ async function readFileAsBase64(file) {
 // Fetch Unique ID from Server
 async function getUniqueId() {
     try {
-        const response = await fetch('/unique-id', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+        const response = await fetch('/auth/get_unique_id', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         return data.unique_id;

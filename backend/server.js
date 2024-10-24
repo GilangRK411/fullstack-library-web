@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const authrouter = require('./routes/authrou.js');
 const editprofilerou = require('./routes/editprofilerou.js');
 const pool = require('../backend/database/database.js');
-const { verifyToken } = require('./middleware/authmiddleware.js');
+const { verifyTokenAndCheckSession } = require('./middleware/authmiddleware.js');
 const { validationResult } = require('express-validator');
 const logger = require('./utils/logger.js');
 const bookRoutes = require('./routes/bookroute.js');
@@ -18,7 +18,11 @@ const app = express();
 emitter.setMaxListeners(100);
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../frontend/alertpage'));
+app.set('views', [
+    path.join(__dirname, '../frontend/views'),
+    path.join(__dirname, '../frontend/views/alertpage')
+  ]);
+  
 
 app.use(cors());
 app.use(express.json());
@@ -47,7 +51,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'landing.html'));
 });
 
-app.get('/catalog', verifyToken, (req, res) => {
+app.get('/catalog', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'catalog.html'));
 });
 
@@ -56,15 +60,15 @@ app.get('/alert', (req, res) => {
     res.render('alertauth.ejs', { message });
 });
 
-app.get('/forumthread', verifyToken, (req, res) => {
+app.get('/forumthread', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'forumthread.html'));
 });
 
-app.get('/uploadbook', verifyToken, (req, res) => {
+app.get('/uploadbook', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
 });
 
-app.get('/user/edit', verifyToken, (req, res) => {
+app.get('/user/edit', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'), (err) => {
         if (err) {
             console.error('Error sending file:', err);
@@ -89,7 +93,7 @@ app.use('/user/edit', editprofilerou);
 
 app.use('/book', bookRoutes); // Prefix routes with /api
 
-app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
+app.get('/user/profile_picture/:unique_id', verifyTokenAndCheckSession, async (req, res) => {
     const uniqueId = req.params.unique_id; 
     try {
         const connection = await pool.getConnection();
@@ -120,24 +124,6 @@ app.get('/user/profile_picture/:unique_id', verifyToken, async (req, res) => {
     } catch (err) {
         console.error('Database error:', err); 
         return res.status(500).json({ error: 'Database error' });
-    }
-});
-
-app.get('/unique-id', verifyToken, async (req, res) => {
-    const userId = req.userId; 
-    
-    try {
-        const [rows] = await pool.query('SELECT unique_id FROM users WHERE id = ?', [userId]);
-
-        if (rows.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const uniqueId = rows[0].unique_id; 
-        res.json({ unique_id: uniqueId }); 
-    } catch (error) {
-        console.error('Database Query Error:', error);
-        return res.status(500).json({ message: 'An error occurred on the server' });
     }
 });
 

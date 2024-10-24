@@ -129,8 +129,8 @@ async function getBase64ImageFromIndexedDB() {
 
 async function getUniqueId() {
     try {
-        const response = await fetch('/unique-id', {
-            method: 'GET',
+        const response = await fetch('/auth/get_unique_id', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             }

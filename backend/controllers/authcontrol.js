@@ -86,11 +86,36 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.logout = (req, res) => {
-    res.clearCookie('token'); 
-    res.clearCookie('unique_id');
-    return res.status(200).json({ message: 'Logout successful' });
+exports.logout = async (req, res) => {
+    const token = req.cookies.token; 
+
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        const userId = decoded.id; 
+        const query = 'DELETE FROM user_sessions WHERE user_id = ?';
+        const [results] = await pool.query(query, [userId]);
+
+        res.clearCookie('token'); 
+        res.clearCookie('unique_id');
+
+        if (results.affectedRows > 0) {
+            return res.status(200).json({ message: 'Logout successful' });
+        } else {
+            return res.status(404).json({ message: 'No active session found for this user.' });
+        }
+    } catch (err) {
+        console.error('Error during logout:', err);
+        if (err.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        return res.status(500).json({ message: 'Failed to log out, please try again.' });
+    }
 };
+
+
 
 exports.register = async (req, res) => {
     const { username, password, email } = req.body;
