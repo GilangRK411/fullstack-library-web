@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../database/database.js');
 const jwt = require('jsonwebtoken');
-const { secretKey } = require('../middleware/session.js');
+const { secretKey } = require('../config/secretkeyconfig.js');
 const crypto = require('crypto');
 
 function hashUniqueId(uniqueId) {

@@ -101,6 +101,38 @@ button:hover {
     text-decoration: none; /* Remove underline on hover for clarity */
 }
 
+/* Container for password input and checkbox */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input[type="password"] {
+    padding-right: 60px; /* Space for the checkbox and label */
+}
+
+/* Show-password container styling */
+.show-password {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.show-password input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.show-password label {
+    margin-left: 4px; /* Space between checkbox and label */
+    font-size: 12px;
+    color: rgba(160, 132, 80, 1);
+    cursor: pointer;
+}
+
 /* Responsive Styles */
 @media (max-width: 480px) {
     .login-form {

@@ -23,6 +23,11 @@ app.set('views', [
     path.join(__dirname, '../frontend/views/alertpage')
   ]);
   
+  app.get('/alert', (req, res) => {
+    const message = req.query.message || 'Something went wrong';
+    res.render('alertauth.ejs', { message });
+});
+
 
 app.use(cors());
 app.use(express.json());
@@ -55,11 +60,6 @@ app.get('/catalog', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'catalog.html'));
 });
 
-app.get('/alert', (req, res) => {
-    const message = req.query.message || 'Something went wrong';
-    res.render('alertauth.ejs', { message });
-});
-
 app.get('/forumthread', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'forumthread.html'));
 });
@@ -67,6 +67,16 @@ app.get('/forumthread', verifyTokenAndCheckSession, (req, res) => {
 app.get('/uploadbook', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'uploadbook.html'));
 });
+
+// REQ RESET % RESET PASSWORD
+app.get('/reset-password', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/web', 'resetpassword.html'));
+});
+
+app.get('/request-reset-password', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/web', 'requestresetpassword.html'));
+});
+
 
 app.get('/user/edit', verifyTokenAndCheckSession, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/web', 'editprofile.html'), (err) => {

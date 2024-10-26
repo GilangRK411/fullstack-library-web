@@ -13,16 +13,27 @@
             <div class="head">
                 <p>Please log in to continue.</p>
             </div>
-            <div class="login-form" >
+            <div class="login-form">
                 <form id="loginform" novalidate>
                     <label for="username"></label>
                     <input type="text" id="logincredential" placeholder="Username or Email" required>
                     
                     <label for="password"></label>
-                    <input type="password" id="loginpassword" placeholder="Password" required>
+                    <div class="password-container">
+                        <input type="password" id="loginpassword" placeholder="Password" required>
+                        <div class="show-password">
+                            <input type="checkbox" id="togglePassword">
+                            <label for="togglePassword">Show</label>
+                        </div>
+                    </div>
                     
                     <button type="submit">Login</button>
-                    <p id="eroormassage" class="error-message"></p>
+                    <p id="errormessage" class="error-message"></p>
+
+                    <!-- Password reset prompt, hidden by default -->
+                    <p id="resetPrompt" class="reset-prompt" style="display: none;">
+                        Forgot your password? <a href="/request-reset-password">Reset it here</a>.
+                    </p>
                 </form>
                 <p class="register-prompt">Belum punya akun? <a href="/register">Silahkan daftar</a>.</p>
             </div>

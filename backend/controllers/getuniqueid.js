@@ -1,6 +1,6 @@
 const pool = require('../database/database.js');
 const jwt = require('jsonwebtoken');
-const { secretKey } = require('../middleware/session.js');
+const { secretKey } = require('../config/secretkeyconfig.js');
 
 exports.retrieveUniqueId = async (req, res) => {
     const token = req.cookies.token; 
