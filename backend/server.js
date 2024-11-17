@@ -20,7 +20,6 @@ emitter.setMaxListeners(100);
 app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, '../frontend/views'),
-    path.join(__dirname, '../frontend/views/alertpage')
   ]);
   
   app.get('/alert', (req, res) => {

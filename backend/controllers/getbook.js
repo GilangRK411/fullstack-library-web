@@ -1,9 +1,7 @@
 const pool = require('../database/database.js');
 
-// Function to get all books
 exports.getBooks = async (req, res) => {
     try {
-        // Select book_id and book_title from the books table
         const [results] = await pool.query('SELECT book_id FROM books');
 
         if (results.length === 0) {
@@ -11,7 +9,6 @@ exports.getBooks = async (req, res) => {
             return res.status(404).json({ message: 'No books found.' });
         }
 
-        // Respond with the results containing only book_id and book_title
         res.json(results);
     } catch (error) {
         console.error('Error executing query:', error);
@@ -29,8 +26,8 @@ exports.showBook = async (req, res) => {
             return res.status(404).send('Book not found');
         }
 
-        const bookTitle = rows[0].book_title; // Get book title
-        const imageBuffer = rows[0].book_image; // Get image buffer
+        const bookTitle = rows[0].book_title;
+        const imageBuffer = rows[0].book_image; 
 
         res.json({
             title: bookTitle,

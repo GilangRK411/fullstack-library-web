@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { bookupload } = require('../controllers/bookcontrol.js'); 
-const { getBooks, showBook } = require('../model/getbook.js');
+const { getBooks, showBook } = require('../controllers/getbook.js');
 const { getBookBody } = require('../model/bookbody.js');
 
 const router = express.Router();
